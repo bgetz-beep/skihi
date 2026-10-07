@@ -1,0 +1,79 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import CommitteeCard from "@components/CommitteeCard.astro";
+import { images } from "@/images/manifest";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema, buildOrganizationSchema } from "@/lib/schema";
+
+const description = `The Ski-Hi Stampede Committee: 18 volunteers from Monte Vista and the San Luis Valley who run Colorado's oldest pro rodeo.`;
+const url = `${site.baseUrl}/committee`;
+
+const officers = [
+  { name: "Greg Metz", role: "President", photo: images.committee.greg },
+  { name: "Brandon Rogers", role: "Vice President", photo: images.committee.brandon },
+  { name: "Nick Malone", role: "Treasurer", photo: images.committee.nick },
+  { name: "Eric Kimberling", role: "Secretary", photo: images.committee.eric },
+];
+
+const directors = [
+  { name: "Charlie Burd", role: "Director", photo: images.committee.charlie },
+  { name: "CE Glunz", role: "Director", photo: images.committee.ce },
+  { name: "Keith Rogers", role: "Director", photo: images.committee.keith },
+  { name: "Mark Deacon", role: "Director", photo: images.committee.mark },
+  { name: "Karla Willschau", role: "Director", photo: images.committee.karla },
+  { name: "Derek Cooper", role: "Director", photo: images.committee.derek },
+  { name: "Rocky Southway", role: "Director", photo: images.committee.rocky },
+  { name: "Kelsey Kimberling", role: "Director", photo: images.committee.kelsey },
+  { name: "Helen Smith", role: "Director", photo: images.committee.helen },
+  { name: "Ryan Rumley", role: "Director", photo: images.committee.ryan },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Committee", description, url }),
+  buildOrganizationSchema(),
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Committee", url },
+  ]),
+];
+---
+<BaseLayout title="Committee" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="18 volunteers, one event"
+    title="The Stampede Committee."
+    subtitle="Monte Vista and valley volunteers who show up year-round. Officers lead; directors keep the arena running."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-20">
+
+    <section>
+      <SectionHeader number="01" label="Officers" />
+      <ul class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {officers.map((m) => (
+          <li>
+            <CommitteeCard name={m.name} role={m.role} photo={m.photo} />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="Directors" />
+      <ul class="mt-10 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {directors.map((m) => (
+          <li>
+            <CommitteeCard name={m.name} role={m.role} photo={m.photo} />
+          </li>
+        ))}
+      </ul>
+      <p class="mt-10 font-sans text-sm text-charcoal/70 italic">
+        The committee describes itself as 18 volunteers. The 4 additional members not pictured are [CONFIRM] by the committee.
+      </p>
+    </section>
+
+  </main>
+</BaseLayout>
