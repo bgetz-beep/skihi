@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  name: string;
+  role: string;
+  photo: ImageMetadata;
+}
+
+const { name, role, photo } = Astro.props;
+---
+<figure class="space-y-3">
+  <div class="aspect-square border border-dust overflow-hidden bg-bone">
+    <Image
+      src={photo}
+      alt={`${name}, ${role}, Ski-Hi Stampede Committee`}
+      widths={[200, 400]}
+      sizes="(min-width: 1024px) 25vw, 50vw"
+      format="webp"
+      loading="lazy"
+      class="h-full w-full object-cover"
+    />
+  </div>
+  <figcaption>
+    <p class="font-display text-lg font-black text-charcoal leading-tight">{name}</p>
+    <p class="font-sans text-xs uppercase tracking-widest text-oxblood">{role}</p>
+  </figcaption>
+</figure>

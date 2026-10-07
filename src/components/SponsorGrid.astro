@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Sponsor {
+  name: string;
+  role?: string;
+  photo?: ImageMetadata;
+}
+
+interface Tier {
+  label: string;
+  description?: string;
+  columns?: 2 | 3 | 4 | 5;
+  sponsors: readonly Sponsor[];
+}
+
+interface Props {
+  tiers: readonly Tier[];
+}
+
+const { tiers } = Astro.props;
+
+const columnsClass = (n: number | undefined) => {
+  switch (n) {
+    case 2: return "md:grid-cols-2";
+    case 3: return "md:grid-cols-3";
+    case 5: return "md:grid-cols-3 lg:grid-cols-5";
+    case 4:
+    default: return "md:grid-cols-2 lg:grid-cols-4";
+  }
+};
+---
+<div class="space-y-20">
+  {tiers.map((tier) => (
+    <section>
+      <header class="flex flex-wrap items-end justify-between gap-6 border-t-2 border-oxblood pt-6">
+        <h2 class="font-display font-black text-3xl md:text-4xl text-charcoal">{tier.label}</h2>
+        {tier.description && (
+          <p class="font-sans text-sm text-charcoal/70 max-w-md">{tier.description}</p>
+        )}
+      </header>
+      <ul class={`mt-10 grid gap-8 ${columnsClass(tier.columns)}`}>
+        {tier.sponsors.map((s) => (
+          <li class="space-y-3">
+            {s.photo && (
+              <div class="aspect-video border border-dust bg-bone p-4 flex items-center justify-center">
+                <Image
+                  src={s.photo}
+                  alt={`${s.name} logo`}
+                  widths={[200, 400]}
+                  sizes="(min-width: 1024px) 20vw, 50vw"
+                  format="webp"
+                  loading="lazy"
+                  class="max-h-full max-w-full object-contain"
+                />
+              </div>
+            )}
+            <p class="font-display text-lg font-black text-charcoal leading-tight">{s.name}</p>
+            {s.role && <p class="font-sans text-xs uppercase tracking-widest text-oxblood">{s.role}</p>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>

@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+  subtitle?: string;
+}
+
+const { title, eyebrow, subtitle } = Astro.props;
+---
+<header class="relative bg-oxblood text-bone">
+  <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+    {eyebrow && (
+      <p class="font-sans text-xs md:text-sm font-medium uppercase tracking-widest text-dust">
+        {eyebrow}
+      </p>
+    )}
+    <h1
+      class="mt-4 font-display font-black leading-[0.9]"
+      style="font-size: clamp(2.5rem, 7vw, 5.5rem);"
+    >
+      {title}
+    </h1>
+    {subtitle && (
+      <p class="mt-6 font-sans text-lg md:text-2xl text-bone/90 max-w-3xl">
+        {subtitle}
+      </p>
+    )}
+  </div>
+</header>

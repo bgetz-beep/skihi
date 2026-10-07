@@ -78,3 +78,39 @@ export function buildBreadcrumbSchema(
     })),
   };
 }
+
+export function buildFaqSchema(
+  items: ReadonlyArray<{ question: string; answer: string }>
+): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": items.map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer,
+      },
+    })),
+  };
+}
+
+export function buildWebPageSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": opts.name,
+    "description": opts.description,
+    "url": opts.url,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": organization.name,
+      "url": site.baseUrl,
+    },
+  };
+}

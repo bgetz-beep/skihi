@@ -1,0 +1,41 @@
+---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: readonly FaqItem[];
+  class?: string;
+}
+
+const { items, class: className = "" } = Astro.props;
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+};
+---
+<section class={className}>
+  <dl class="space-y-10">
+    {items.map((item) => (
+      <div class="border-t-2 border-dust pt-6">
+        <dt class="font-display font-black text-2xl text-charcoal leading-tight">
+          {item.question}
+        </dt>
+        <dd class="mt-3 font-sans text-base text-charcoal/80 max-w-prose">
+          {item.answer}
+        </dd>
+      </div>
+    ))}
+  </dl>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+</section>
