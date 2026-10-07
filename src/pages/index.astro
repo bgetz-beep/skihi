@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HeroHome from "@components/sections/HeroHome.astro";
+import Countdown from "@components/Countdown.astro";
 import { organization } from "@config/organization";
 
 const description = `${organization.tagline}. ${organization.nextEvent.displayDate}, ${organization.venue.city}, ${organization.venue.region}.`;
@@ -8,5 +9,6 @@ const description = `${organization.tagline}. ${organization.nextEvent.displayDa
 <BaseLayout title="Home" description={description}>
   <main>
     <HeroHome />
+    <Countdown />
   </main>
 </BaseLayout>
