@@ -1,0 +1,81 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import FAQList from "@components/FAQList.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Answers to the most common Ski-Hi Stampede questions. Dates, tickets, parking, gates, mutton busting, parade, scholarship, vendors, and sponsorship.`;
+const url = `${site.baseUrl}/faq`;
+
+const theEvent = [
+  { question: "When is the 2027 Ski-Hi Stampede?", answer: "July 8 to 11, 2027. Thursday through Sunday. Monte Vista, Colorado." },
+  { question: "Where is the Ski-Hi Stampede held?", answer: `${organization.venue.name}, ${organization.venue.streetAddress}, Monte Vista, Colorado ${organization.venue.postalCode}.` },
+  { question: "How long has the Stampede been running?", answer: "Since 1919. 2027 is the 108th consecutive Ski-Hi Stampede." },
+  { question: "Is this a PRCA event?", answer: "Yes. The Ski-Hi Stampede is sanctioned by the Professional Rodeo Cowboys Association in the Mountain States Circuit." },
+];
+
+const gates = [
+  { question: "When do gates open?", answer: "Two hours before the first scheduled event on each day. For 7 PM PRCA performances, gates open at 5 PM." },
+  { question: "Is parking free?", answer: "Yes. Parking at the Ski-Hi Complex is free for all ticket holders." },
+  { question: "What is the bag policy?", answer: "[CONFIRM] 2027 bag policy. Expect a standard check at the gate." },
+  { question: "Can I bring food and drinks?", answer: "Outside food and drinks are not permitted. Concessions on site accept cash and card." },
+  { question: "Are pets allowed?", answer: "[CONFIRM] 2027 pet policy. Service animals are always welcome." },
+  { question: "What if the weather turns?", answer: "The Stampede runs rain or shine. Performances are postponed only for severe weather. Check the Ski-Hi Stampede Facebook page for same-day updates." },
+  { question: "Is the venue accessible?", answer: "Grandstand and Reserved Box seating offer accessible options. Call the ticket office at (719) 852-2055 to confirm ahead of your visit. [CONFIRM] detailed ADA map." },
+];
+
+const kids = [
+  { question: "How do kids enter mutton busting?", answer: "Children ages 5 to 7, under 50 pounds, San Luis Valley residents. Register at the Stampede Board Room on Monday July 5, 2027 from 8 AM to 12 PM. Limited to 10 per night." },
+  { question: "Are kids' tickets cheaper?", answer: "Yes. Reduced rates for children 6 to 12. Children under 6 are free in General Admission with a paying adult." },
+];
+
+const participation = [
+  { question: "How do PRCA pros enter?", answer: "Through PRCA central entry at prorodeo.com, per the standard PRCA schedule." },
+  { question: "How do I enter the parade?", answer: "Online form, PDF download, drop-off at Finer Blessings, or email cyvanderpool@gmail.com. See the parade page for links." },
+  { question: "How do I apply for the ASU scholarship?", answer: "Download the application from the scholarship page and return it by [CONFIRM: 2027 deadline]. $3,500 for SLV residents attending Adams State University." },
+  { question: "How do I become a sponsor?", answer: "Email info@skihistampede.com for the current sponsorship packet. Tiers from Chute to Platinum, including event-specific sponsorships." },
+  { question: "How do I apply as a vendor?", answer: "Email info@skihistampede.com during the open application window. Food, craft, and merchandise vendor categories available." },
+];
+---
+<BaseLayout title="FAQ" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify([
+    buildWebPageSchema({ name: "FAQ", description, url }),
+    buildBreadcrumbSchema([
+      { name: "Home", url: site.baseUrl },
+      { name: "FAQ", url },
+    ]),
+  ])}></script>
+
+  <PageHero
+    eyebrow="Answers"
+    title="Frequently asked questions."
+    subtitle="Dates. Tickets. Gates. Mutton busting. Parade. Everything else you want to know before you show up."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-20">
+
+    <section>
+      <SectionHeader number="01" label="The event" />
+      <FAQList items={theEvent} class="mt-10" />
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="Gates, parking, policies" />
+      <FAQList items={gates} class="mt-10" />
+    </section>
+
+    <section>
+      <SectionHeader number="03" label="Kids" />
+      <FAQList items={kids} class="mt-10" />
+    </section>
+
+    <section>
+      <SectionHeader number="04" label="Participation" />
+      <FAQList items={participation} class="mt-10" />
+    </section>
+
+  </main>
+</BaseLayout>
