@@ -1,0 +1,98 @@
+---
+import BuyTicketsButton from "@components/BuyTicketsButton.astro";
+import { organization } from "@config/organization";
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/events", label: "Events" },
+  { href: "/tickets", label: "Tickets" },
+  { href: "/visit", label: "Visit" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+---
+<nav class="relative z-30 border-b border-dust/40 bg-bone">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <a href="/" class="font-display text-2xl font-black tracking-tight text-charcoal">
+      {organization.name}
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="font-sans text-xs font-medium uppercase tracking-widest text-charcoal hover:text-oxblood"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="hidden md:block">
+      <BuyTicketsButton variant="primary" />
+    </div>
+
+    <button
+      id="nav-toggle"
+      class="md:hidden font-sans text-xs font-medium uppercase tracking-widest text-charcoal"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      Menu
+    </button>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="hidden fixed inset-0 z-40 bg-bone p-8 flex-col justify-between"
+  >
+    <div class="flex justify-end">
+      <button
+        id="nav-close"
+        class="font-sans text-xs font-medium uppercase tracking-widest text-charcoal"
+      >
+        Close
+      </button>
+    </div>
+    <ul class="space-y-6">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="font-display text-5xl font-black text-charcoal hover:text-oxblood"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div>
+      <BuyTicketsButton variant="primary" class="w-full" />
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const close = document.getElementById("nav-close");
+  const menu = document.getElementById("mobile-menu");
+
+  function openMenu() {
+    menu?.classList.remove("hidden");
+    menu?.classList.add("flex");
+    toggle?.setAttribute("aria-expanded", "true");
+    document.body.classList.add("overflow-hidden");
+  }
+
+  function closeMenu() {
+    menu?.classList.remove("flex");
+    menu?.classList.add("hidden");
+    toggle?.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("overflow-hidden");
+  }
+
+  toggle?.addEventListener("click", openMenu);
+  close?.addEventListener("click", closeMenu);
+</script>
