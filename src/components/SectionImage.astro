@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  class?: string;
+}
+
+const { src, alt, caption, class: className = "" } = Astro.props;
+---
+<figure class={`space-y-3 ${className}`}>
+  <div class="border border-dust">
+    <Image
+      src={src}
+      alt={alt}
+      widths={[400, 800, 1200]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      format="webp"
+      loading="lazy"
+      class="h-auto w-full"
+    />
+  </div>
+  {caption && (
+    <figcaption class="font-sans text-xs uppercase tracking-widest text-charcoal/70">
+      {caption}
+    </figcaption>
+  )}
+</figure>
