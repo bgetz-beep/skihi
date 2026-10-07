@@ -1,0 +1,89 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Vendor applications for the 2027 Ski-Hi Stampede. Food vendors, craft vendors, and merchandisers. Application window [CONFIRM 2027 dates].`;
+const url = `${site.baseUrl}/vendors`;
+
+const requirements = [
+  "Completed application submitted to the committee",
+  "Committee approval of product mix and placement",
+  "Current Colorado business license and sales tax account",
+  "Vendor-provided tent, tables, generator",
+  "Compliance with Rio Grande County health code",
+  "Setup Wednesday July 7, teardown Monday July 12",
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Vendors", description, url }),
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Vendors", url },
+  ]),
+];
+---
+<BaseLayout title="Vendors" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Food, craft, merchandise"
+    title="Vendor applications."
+    subtitle="Set up on the Stampede grounds for four days of foot traffic. Applications open [CONFIRM 2027 window]."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-2 items-start">
+      <div>
+        <SectionHeader number="01" label="Requirements" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Six things we need.
+        </h2>
+        <ol class="mt-10 space-y-4 font-sans text-base text-charcoal/90">
+          {requirements.map((r, i) => (
+            <li class="grid grid-cols-[auto_1fr] gap-4 border-t-2 border-dust pt-4">
+              <span class="font-display text-xl font-black text-oxblood tabular w-8">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="pt-1">{r}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-4">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">2027 window</p>
+        <p class="font-sans text-base text-charcoal">
+          Applications open: [CONFIRM]<br />
+          Applications close: [CONFIRM]
+        </p>
+        <p class="pt-2 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Fees</p>
+        <p class="font-sans text-base text-charcoal">
+          [CONFIRM] 2027 vendor fees by category (food, craft, merch, 10x10, 10x20).
+        </p>
+        <p class="pt-2 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Contact</p>
+        <p class="font-sans text-base">
+          <a href={`mailto:${organization.contact.email}?subject=Vendor Application`} class="text-oxblood hover:underline">
+            {organization.contact.email}
+          </a>
+        </p>
+      </aside>
+    </section>
+
+    <section>
+      <div class="flex flex-wrap gap-4">
+        <Button href={`mailto:${organization.contact.email}?subject=Vendor Application Request`}>
+          Request an application
+        </Button>
+        <Button href="/[CONFIRM]-2027-vendor-application.pdf" variant="ghost">
+          Download PDF (when live)
+        </Button>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
