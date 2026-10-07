@@ -1,0 +1,45 @@
+---
+import BuyTicketsButton from "@components/BuyTicketsButton.astro";
+
+const priceRows = [
+  { label: "Reserved Box, per performance", price: "$45" },
+  { label: "Reserved Grandstand, adult", price: "$30" },
+  { label: "Reserved Grandstand, child (6 to 12)", price: "$15" },
+  { label: "Reserved Grandstand, child (under 6)", price: "Free" },
+  { label: "General Admission, adult", price: "$18" },
+  { label: "General Admission, child (6 to 12)", price: "$8" },
+  { label: "4-Night Package", price: "$140 to $180" },
+];
+---
+<div id="embed" class="border-2 border-oxblood bg-bone p-8 md:p-12">
+  <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">
+    Ticketing powered by SeatMaxx
+  </p>
+  <h2 class="mt-3 font-display font-black text-3xl md:text-5xl text-charcoal leading-[0.95]">
+    Pick your night. Pick your seat.
+  </h2>
+  <p class="mt-4 font-sans text-base text-charcoal/80 max-w-prose">
+    The SeatMaxx seat picker loads here once the integration is live. Below is the 2027 pricing structure.
+  </p>
+
+  <table class="mt-10 w-full border-t-2 border-dust">
+    <tbody class="divide-y divide-dust/40">
+      {priceRows.map((row) => (
+        <tr>
+          <td class="py-4 font-sans text-base text-charcoal">{row.label}</td>
+          <td class="py-4 font-sans text-base font-medium text-charcoal tabular text-right">{row.price}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-4 font-sans text-xs uppercase tracking-widest text-oxblood">
+    [CONFIRM] 2027 pricing based on 2026 structure
+  </p>
+
+  <div class="mt-10 flex flex-wrap gap-4">
+    <BuyTicketsButton />
+    <a href="#faq" class="inline-flex items-center font-sans text-xs font-medium uppercase tracking-widest text-charcoal hover:text-oxblood">
+      Ticketing FAQ
+    </a>
+  </div>
+</div>

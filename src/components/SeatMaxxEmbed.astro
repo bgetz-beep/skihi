@@ -1,0 +1,36 @@
+---
+import SeatMaxxPlaceholder from "@components/SeatMaxxPlaceholder.astro";
+import BuyTicketsButton from "@components/BuyTicketsButton.astro";
+import { ticketing } from "@config/ticketing";
+---
+{ticketing.mode === "placeholder" && <SeatMaxxPlaceholder />}
+
+{ticketing.mode === "embed" && (
+  <div id={ticketing.embedContainerId || "seatmaxx-mount"}>
+    <noscript>
+      <p class="font-sans text-base text-charcoal/80">
+        Enable JavaScript to see the SeatMaxx seat picker, or
+        <a class="underline text-oxblood" href={ticketing.buyTicketsUrl || "#"}>
+          open it in a new tab
+        </a>.
+      </p>
+    </noscript>
+    <script
+      is:inline
+      src={ticketing.embedScriptSrc}
+      {...ticketing.embedAttributes}
+    ></script>
+  </div>
+)}
+
+{ticketing.mode === "link" && (
+  <div id="embed" class="border-2 border-oxblood bg-bone p-8 md:p-12 text-center space-y-6">
+    <h2 class="font-display font-black text-3xl md:text-5xl text-charcoal">
+      Buy your tickets.
+    </h2>
+    <p class="font-sans text-base text-charcoal/80">
+      Tickets open in SeatMaxx. You will not leave this site.
+    </p>
+    <BuyTicketsButton class="mx-auto" />
+  </div>
+)}
