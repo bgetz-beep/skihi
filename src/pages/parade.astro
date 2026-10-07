@@ -1,0 +1,151 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import FAQList from "@components/FAQList.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `The Ski-Hi Stampede Downtown Parade. Friday and Saturday, July 10 and 11, 2027. Downtown Monte Vista. Entry information below.`;
+const url = `${site.baseUrl}/parade`;
+
+const entryMethods = [
+  { label: "Online form", detail: "Google Forms, open now", href: "https://docs.google.com/forms/d/e/1FAIpQLSdsFWrEmRpWZZ4gPIeLUPxGhsBquHHZlKvFHADOU5-4oiClKQ/viewform", external: true },
+  { label: "Downloadable PDF", detail: "Print, fill out, drop off", href: "https://www.skihistampede.com/_files/ugd/262ad9_f27345c57cec4a86b8e0db2e6c786660.pdf", external: true },
+  { label: "In person", detail: "Drop at Finer Blessings, Monte Vista", href: null, external: false },
+  { label: "Email", detail: "Send to cyvanderpool@gmail.com", href: "mailto:cyvanderpool@gmail.com", external: false },
+];
+
+const faqItems = [
+  {
+    question: "When is the Ski-Hi Stampede parade?",
+    answer: "Friday and Saturday mornings, July 10 and July 11, 2027. Both parades start at 10:00 AM.",
+  },
+  {
+    question: "What is the parade route?",
+    answer: "The parade starts on Chico Avenue, runs east on First Avenue through downtown Monte Vista, and ends at the Ski-Hi Complex. [CONFIRM] route map.",
+  },
+  {
+    question: "How do I enter a float?",
+    answer: "Submit an entry form online, download and print the PDF, drop off at Finer Blessings in Monte Vista, or email cyvanderpool@gmail.com. See entry methods above.",
+  },
+  {
+    question: "Are there entry fees?",
+    answer: "[CONFIRM] entry fee structure. Community organizations, youth groups, and valley businesses welcome.",
+  },
+  {
+    question: "Who is the 2027 Grand Marshal?",
+    answer: "[CONFIRM] 2027 Grand Marshal announcement.",
+  },
+  {
+    question: "Where should spectators stand?",
+    answer: "Anywhere along First Avenue in downtown Monte Vista. Arrive 20 minutes early for a good spot. Chairs welcome.",
+  },
+];
+
+const parade = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": `${organization.name} Downtown Parade`,
+  "description": "Annual community parade through downtown Monte Vista on the Friday and Saturday of Ski-Hi Stampede week.",
+  "startDate": "2027-07-10T10:00:00-06:00",
+  "endDate": "2027-07-11T12:00:00-06:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Downtown Monte Vista",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Monte Vista",
+      "addressRegion": "CO",
+      "addressCountry": "US",
+    },
+  },
+};
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Parade", description, url }),
+  parade,
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Parade", url },
+  ]),
+];
+---
+<BaseLayout title="Parade" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Downtown Monte Vista"
+    title="The Stampede parade."
+    subtitle="Friday and Saturday morning, July 10 and 11, 2027. Floats, horses, high school bands, and the whole valley on First Avenue."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-2 items-start">
+      <div>
+        <SectionHeader number="01" label="The parade" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Two mornings on First Avenue.
+        </h2>
+        <div class="mt-6 space-y-4 font-sans text-base text-charcoal/90 max-w-prose">
+          <p>
+            The Ski-Hi Stampede parade runs twice during the week, Friday morning and Saturday morning, both at 10:00 AM. Same route both days.
+          </p>
+          <p>
+            Starts on Chico Avenue, east on First Avenue through downtown, ends at the Stampede grounds. [CONFIRM] exact route map.
+          </p>
+        </div>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-4">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">When</p>
+        <p class="font-sans text-lg text-charcoal">
+          <time datetime="2027-07-10T10:00">Friday, July 10, 10:00 AM</time>
+        </p>
+        <p class="font-sans text-lg text-charcoal">
+          <time datetime="2027-07-11T10:00">Saturday, July 11, 10:00 AM</time>
+        </p>
+        <p class="pt-4 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Where</p>
+        <p class="font-sans text-base text-charcoal">Downtown Monte Vista, First Avenue</p>
+      </aside>
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="Enter a float" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        Four ways to enter.
+      </h2>
+      <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {entryMethods.map((e, i) => (
+          <li class="border-t-2 border-oxblood pt-5">
+            <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood tabular">{String(i + 1).padStart(2, "0")}</p>
+            <p class="mt-2 font-display text-xl font-black text-charcoal">{e.label}</p>
+            <p class="mt-2 font-sans text-sm text-charcoal/70">{e.detail}</p>
+            {e.href && (
+              <a href={e.href} rel={e.external ? "noopener noreferrer" : undefined} target={e.external ? "_blank" : undefined} class="mt-3 inline-block font-sans text-xs font-medium uppercase tracking-widest text-oxblood hover:underline">
+                Open ↗
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <SectionHeader number="03" label="FAQ" />
+      <FAQList items={faqItems} class="mt-10" />
+    </section>
+
+    <section>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/events">Full schedule</Button>
+        <Button href="/visit" variant="ghost">Plan your visit</Button>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
