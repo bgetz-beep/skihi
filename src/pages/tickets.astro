@@ -1,0 +1,105 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import SeatMaxxEmbed from "@components/SeatMaxxEmbed.astro";
+import FAQList from "@components/FAQList.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildEventSchema, buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Buy tickets for the ${organization.name}, ${organization.nextEvent.displayDate}, Monte Vista, Colorado. Reserved and general admission options for every performance.`;
+const url = `${site.baseUrl}/tickets`;
+
+const faqItems = [
+  {
+    question: "When do 2027 tickets go on sale?",
+    answer: "The Ski-Hi Stampede ticket office opens for the 2027 event [CONFIRM: date]. The office is at 947 1st Ave, Monte Vista, Colorado, Monday through Friday 9 AM to 5 PM.",
+  },
+  {
+    question: "What is the difference between Reserved Box and Reserved Grandstand?",
+    answer: "Reserved Box seats are the front rows and have individual seat assignments. Reserved Grandstand is bench seating in the covered stands with assigned sections. General Admission is open seating in the outer stands.",
+  },
+  {
+    question: "Can I buy a 4-night package?",
+    answer: "Yes. The 4-night package includes one ticket for each PRCA performance Thursday through Sunday. Package pricing is lower than buying each night separately.",
+  },
+  {
+    question: "Are children's tickets available?",
+    answer: "Yes. Children ages 6 to 12 pay a reduced rate for both Reserved Grandstand and General Admission. Children under 6 are free in General Admission seating when accompanied by a paying adult.",
+  },
+  {
+    question: "Is parking included?",
+    answer: "Yes. Parking at the Ski-Hi Complex is free for all ticket holders.",
+  },
+  {
+    question: "Can I buy tickets at the gate?",
+    answer: "Yes, pending availability. Advance purchase is recommended for Friday and Saturday performances, which historically sell out.",
+  },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Tickets", description, url }),
+  buildEventSchema(),
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Tickets", url },
+  ]),
+];
+---
+<BaseLayout title="Tickets" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow={organization.nextEvent.displayDate}
+    title="Tickets."
+    subtitle="Reserved Box, Reserved Grandstand, and General Admission for every performance of the 2027 Ski-Hi Stampede."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section>
+      <SectionHeader number="01" label="Buy tickets" />
+      <div class="mt-10">
+        <SeatMaxxEmbed />
+      </div>
+    </section>
+
+    <section class="grid gap-12 md:grid-cols-2 items-start">
+      <div>
+        <SectionHeader number="02" label="Ticket office" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Prefer to buy in person?
+        </h2>
+        <p class="mt-6 font-sans text-base text-charcoal/80 max-w-prose">
+          The ticket office is open Monday through Friday during the lead-up to the event. Cash and card accepted.
+        </p>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-4">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Ticket Office</p>
+        <address class="not-italic font-sans text-base text-charcoal">
+          {organization.ticketOffice.streetAddress}<br />
+          {organization.ticketOffice.city}, {organization.ticketOffice.region} {organization.ticketOffice.postalCode}
+        </address>
+        <p class="font-sans text-sm text-charcoal/80">{organization.ticketOffice.hours}</p>
+        <p class="font-sans text-sm text-charcoal/80">
+          Opens [CONFIRM: 2027 opening date]
+        </p>
+        <p class="font-sans text-sm">
+          <a href={`tel:${organization.contact.phone.replace(/[^0-9+]/g, "")}`} class="text-oxblood hover:underline">
+            {organization.contact.phoneDisplay}
+          </a>
+        </p>
+      </aside>
+    </section>
+
+    <section id="faq">
+      <SectionHeader number="03" label="Ticketing FAQ" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        Six questions, six answers.
+      </h2>
+      <FAQList items={faqItems} class="mt-12" />
+    </section>
+
+  </main>
+</BaseLayout>
