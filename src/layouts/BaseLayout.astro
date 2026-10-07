@@ -54,11 +54,6 @@ const canonical = new URL(Astro.url.pathname, site.baseUrl).toString();
     <slot name="jsonld" />
   </head>
   <body class="bg-paper text-charcoal">
-    {!site.indexable && (
-      <div class="bg-yellow-200 text-stone-900 text-sm px-4 py-2 text-center border-b border-yellow-400">
-        {site.pitchBannerText}
-      </div>
-    )}
     <Nav />
     <slot />
     <Footer />
