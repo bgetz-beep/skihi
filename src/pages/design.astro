@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+import BuyTicketsButton from "@components/BuyTicketsButton.astro";
+import HeroImage from "@components/HeroImage.astro";
+import SectionImage from "@components/SectionImage.astro";
+import ArchiveImage from "@components/ArchiveImage.astro";
+import { images } from "@/images/manifest";
+
+const palette = [
+  { name: "bone", hex: "#F2EBDC" },
+  { name: "oxblood", hex: "#6B1F1A" },
+  { name: "dust", hex: "#B59470" },
+  { name: "denim", hex: "#2B3B55" },
+  { name: "charcoal", hex: "#1A1613" },
+  { name: "grit", hex: "#0F0C0A" },
+];
+---
+<BaseLayout title="Design System" description="Internal design primitives reference.">
+  <main class="max-w-7xl mx-auto px-6 py-16 space-y-24">
+
+    <section>
+      <h1 class="font-display text-5xl font-black">Design System</h1>
+      <p class="mt-2 text-charcoal/70 font-sans text-sm max-w-prose">
+        Internal reference. Every primitive used across the site, rendered in isolation.
+        Not linked from navigation and excluded from the sitemap on launch.
+      </p>
+    </section>
+
+    <section class="space-y-8">
+      <SectionHeader number="01" label="Palette" />
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+        {palette.map((c) => (
+          <div class="space-y-2">
+            <div class="h-24 w-full border border-charcoal/20" style={`background-color: ${c.hex};`}></div>
+            <p class="font-sans text-xs uppercase tracking-widest">{c.name}</p>
+            <p class="font-sans text-xs tabular text-charcoal/60">{c.hex}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="space-y-8">
+      <SectionHeader number="02" label="Typography" />
+      <div class="space-y-6">
+        <div>
+          <p class="font-sans text-xs uppercase tracking-widest text-oxblood">Display, Playfair Display Black</p>
+          <p class="font-display font-black text-6xl leading-none">The quick brown fox jumps over the lazy dog</p>
+        </div>
+        <div>
+          <p class="font-sans text-xs uppercase tracking-widest text-oxblood">Body, IBM Plex Sans</p>
+          <p class="font-sans text-base max-w-prose">
+            The San Luis Valley Ski-Hi Stampede has run every July since 1919. One hundred eight years. Four PRCA Small Rodeo of the Year nominations.
+          </p>
+        </div>
+        <div>
+          <p class="font-sans text-xs uppercase tracking-widest text-oxblood">Tabular numerals</p>
+          <p class="font-display font-black text-4xl tabular">July 8 to 11, 2027</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-8">
+      <SectionHeader number="03" label="Buttons" />
+      <div class="flex flex-wrap gap-4">
+        <Button href="#">Primary Button</Button>
+        <Button href="#" variant="ghost">Ghost Button</Button>
+        <BuyTicketsButton />
+        <BuyTicketsButton variant="ghost" />
+      </div>
+    </section>
+
+    <section class="space-y-8">
+      <SectionHeader number="04" label="Hero image" />
+      <HeroImage src={images.heroHomepage} alt="Rodeo bronc rider in action, Ski-Hi Stampede.">
+        <div class="h-full flex items-end px-8 pb-12">
+          <h2 class="font-display font-black text-bone text-5xl md:text-7xl leading-none">
+            Hero overlay sample
+          </h2>
+        </div>
+      </HeroImage>
+    </section>
+
+    <section class="space-y-8">
+      <SectionHeader number="05" label="Section images" />
+      <div class="grid gap-8 md:grid-cols-2">
+        <SectionImage src={images.programBronc} alt="Program-era bronc riding photograph." caption="Section image sample" />
+        <ArchiveImage src={images.programBronc} alt="Archive treatment on bronc photo." caption="Archive image sample, sepia duotone." />
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
