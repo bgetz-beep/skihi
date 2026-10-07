@@ -28,7 +28,13 @@
 
 ## Images
 
-All downloaded images live under `public/images/raw/`. See the per-page captures for which image belongs to which page.
+Total: 59 unique image files, 15 MB after resize (down from 101 MB raw Wix originals). All stored under `public/images/raw/` with original Wix content-hash filenames preserved for deterministic cross-referencing to the per-page captures.
+
+Pipeline:
+1. `scripts/download-images.sh` fetches originals from Wix CDN.
+2. `scripts/resize-images.mjs` caps max dimension at 2000 px, re-encodes JPG at quality 85. Keeps PNG as PNG. In-place, idempotent.
+
+Astro's `<Image />` performs final AVIF/WebP optimization at build time in Plan 2 (Design System). Source files are kept at 2000 px for retina/zoom flexibility.
 
 ## Open Questions
 
