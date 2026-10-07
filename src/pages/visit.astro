@@ -1,0 +1,185 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import FAQList from "@components/FAQList.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Plan your visit to the Ski-Hi Stampede. Venue address, directions, parking, gate hours, lodging in Monte Vista and Alamosa, and FAQ.`;
+const url = `${site.baseUrl}/visit`;
+
+const lodging = [
+  { name: "Best Western Movie Manor", type: "Hotel", distance: "0.6 miles east of grounds", note: "Historic drive-in movie motel. [CONFIRM] rates for Stampede week." },
+  { name: "Comfort Inn Monte Vista", type: "Hotel", distance: "1.2 miles east of grounds", note: "[CONFIRM] rates" },
+  { name: "Rio Grande County Fairgrounds Campground", type: "Campground", distance: "At the grounds", note: "First-come, first-served tent and RV during Stampede week" },
+  { name: "San Luis Lakes State Park", type: "Campground", distance: "35 miles east, near Great Sand Dunes", note: "Reservable through CPW" },
+  { name: "Hampton Inn Alamosa", type: "Hotel", distance: "17 miles east on US 160", note: "[CONFIRM] rates and shuttle" },
+  { name: "Great Sand Dunes Lodge", type: "Hotel", distance: "40 miles east", note: "Dark skies, 40 min drive to Stampede" },
+];
+
+const touristAttraction = {
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "name": organization.venue.name,
+  "description": `Home of the ${organization.name}, Colorado's Oldest Pro Rodeo. Open year-round for events and July for the Ski-Hi Stampede.`,
+  "url": url,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": organization.venue.streetAddress,
+    "addressLocality": organization.venue.city,
+    "addressRegion": organization.venue.region,
+    "postalCode": organization.venue.postalCode,
+    "addressCountry": organization.venue.country,
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": organization.venue.latitude,
+    "longitude": organization.venue.longitude,
+  },
+};
+
+const lodgingSchema = lodging.map((l) => ({
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": l.name,
+  "description": `${l.distance}. ${l.note}`,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": organization.venue.city,
+    "addressRegion": organization.venue.region,
+    "addressCountry": "US",
+  },
+}));
+
+const faqItems = [
+  {
+    question: "Where is the Ski-Hi Stampede held?",
+    answer: `The Ski-Hi Stampede Complex at ${organization.venue.streetAddress}, ${organization.venue.city}, Colorado ${organization.venue.postalCode}. One block south of US Highway 160.`,
+  },
+  {
+    question: "How do I get to Monte Vista?",
+    answer: "Monte Vista is on US 160 in the San Luis Valley, about four hours southwest of Denver, two and a half hours north of Albuquerque, and one hour west of the Great Sand Dunes.",
+  },
+  {
+    question: "Is there parking at the Ski-Hi Complex?",
+    answer: "Yes. Parking is free for all ticket holders. Enter via Sherman Avenue. Overflow parking is west of the grounds.",
+  },
+  {
+    question: "When do gates open?",
+    answer: "Gates open two hours before the first scheduled event on each night. For 7 PM PRCA performances, gates open at 5 PM.",
+  },
+  {
+    question: "Where should I stay?",
+    answer: "Lodging in Monte Vista fills up during Stampede week. Book early. Alamosa, 17 miles east on US 160, has additional hotels. The Great Sand Dunes Lodge is 40 minutes east.",
+  },
+  {
+    question: "Is the venue accessible?",
+    answer: "The grandstands and Reserved Box seating are accessible with assistance. Call the ticket office at (719) 852-2055 to confirm accessible seating ahead of your visit. [CONFIRM] detailed accessibility map.",
+  },
+  {
+    question: "What is the altitude?",
+    answer: "Monte Vista sits at 7,664 feet. Expect cool evenings even in July. Hydrate and bring a layer.",
+  },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Plan Your Visit", description, url }),
+  touristAttraction,
+  ...lodgingSchema,
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Visit", url },
+  ]),
+];
+---
+<BaseLayout title="Plan Your Visit" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Monte Vista, Colorado"
+    title="Plan your visit."
+    subtitle="Everything you need to drive in, park, find a room, and get to the grounds on time."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-2">
+      <div>
+        <SectionHeader number="01" label="The grounds" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Seven thousand feet, one hundred eight years.
+        </h2>
+        <div class="mt-6 space-y-4 font-sans text-base text-charcoal/90 max-w-prose">
+          <p>
+            The Ski-Hi Complex sits at the edge of Monte Vista, one block south of US Highway 160. The arena has not moved since 1919.
+          </p>
+          <p>
+            Free parking at the grounds. Carnival midway on the east side. Food and drink at the concessions, cash and card. Gates open two hours before the first event.
+          </p>
+        </div>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-6">
+        <div>
+          <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Address</p>
+          <address class="mt-2 not-italic font-sans text-base text-charcoal">
+            {organization.venue.name}<br />
+            {organization.venue.streetAddress}<br />
+            {organization.venue.city}, {organization.venue.region} {organization.venue.postalCode}
+          </address>
+        </div>
+        <div>
+          <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Distances</p>
+          <ul class="mt-2 space-y-1 font-sans text-base text-charcoal">
+            <li>Denver: 4 hours north</li>
+            <li>Albuquerque: 2.5 hours south</li>
+            <li>Alamosa: 17 miles east</li>
+            <li>Great Sand Dunes: 40 min east</li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Elevation</p>
+          <p class="mt-2 font-sans text-base text-charcoal tabular">7,664 feet</p>
+        </div>
+      </aside>
+    </section>
+
+    <section id="lodging">
+      <SectionHeader number="02" label="Where to stay" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        Lodging in Monte Vista and nearby.
+      </h2>
+      <p class="mt-6 font-sans text-base text-charcoal/80 max-w-prose">
+        Book early. Stampede week fills every room in town. Alamosa 17 miles east is the next-closest option.
+      </p>
+      <ul class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {lodging.map((l) => (
+          <li class="border-t-2 border-dust pt-5">
+            <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">{l.type}</p>
+            <p class="mt-2 font-display text-xl font-black text-charcoal leading-tight">{l.name}</p>
+            <p class="mt-2 font-sans text-sm text-charcoal/70">{l.distance}</p>
+            <p class="mt-2 font-sans text-sm text-charcoal/70">{l.note}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <SectionHeader number="03" label="FAQ" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        The seven questions people ask every year.
+      </h2>
+      <FAQList items={faqItems} class="mt-12" />
+    </section>
+
+    <section>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/tickets">Buy tickets</Button>
+        <Button href="/events" variant="ghost">Full schedule</Button>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
