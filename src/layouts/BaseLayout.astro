@@ -12,12 +12,20 @@ import Footer from "@components/Footer.astro";
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = `${site.baseUrl}/og-default.jpg`,
+  ogType = "website",
+} = Astro.props;
 
 const fullTitle = title ? `${title} | ${organization.name}` : organization.name;
 const robotsContent = site.indexable ? "index, follow" : "noindex, nofollow";
+const canonical = new URL(Astro.url.pathname, site.baseUrl).toString();
 ---
 <!doctype html>
 <html lang="en-US">
@@ -26,8 +34,24 @@ const robotsContent = site.indexable ? "index, follow" : "noindex, nofollow";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content={robotsContent} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+
+    <meta property="og:site_name" content={organization.name} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage} />
+
+    <slot name="jsonld" />
   </head>
   <body class="bg-paper text-charcoal">
     {!site.indexable && (

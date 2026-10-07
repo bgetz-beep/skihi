@@ -7,10 +7,24 @@ import WhoWeAre from "@components/sections/WhoWeAre.astro";
 import SponsorPreview from "@components/sections/SponsorPreview.astro";
 import VisitTeaser from "@components/sections/VisitTeaser.astro";
 import { organization } from "@config/organization";
+import { site } from "@config/site";
+import {
+  buildOrganizationSchema,
+  buildEventSchema,
+  buildBreadcrumbSchema,
+} from "@/lib/schema";
 
 const description = `${organization.tagline}. ${organization.nextEvent.displayDate}, ${organization.venue.city}, ${organization.venue.region}.`;
+
+const jsonLd = [
+  buildOrganizationSchema(),
+  buildEventSchema(),
+  buildBreadcrumbSchema([{ name: "Home", url: site.baseUrl }]),
+];
 ---
 <BaseLayout title="Home" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
   <main>
     <HeroHome />
     <Countdown />
