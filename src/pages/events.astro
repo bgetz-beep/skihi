@@ -1,0 +1,147 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+import BuyTicketsButton from "@components/BuyTicketsButton.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildEventSchema, buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Four nights of PRCA rodeo, two downtown parades, nightly dancing, headliner concert, and a carnival. ${organization.nextEvent.displayDate}, Monte Vista.`;
+const url = `${site.baseUrl}/events`;
+
+const nights = [
+  {
+    label: "Thursday Night",
+    date: "July 8, 2027",
+    datetime: "2027-07-08",
+    description: "Opening performance of the 108th Ski-Hi Stampede.",
+    events: [
+      { time: "5:00 PM", title: "Gates open", detail: "Carnival midway opens, concessions and vendors" },
+      { time: "7:00 PM", title: "PRCA Rodeo, Opening Performance", detail: "Presented by Pepper Equipment" },
+      { time: "9:00 PM", title: "Nightly Dance", detail: "Justin Kemp Band at the Stampede Grounds" },
+    ],
+  },
+  {
+    label: "Friday Night",
+    date: "July 9, 2027",
+    datetime: "2027-07-09",
+    description: "Headliner concert night.",
+    events: [
+      { time: "10:00 AM", title: "Downtown Parade", detail: "Starts at Chico Avenue, east on First Avenue" },
+      { time: "5:00 PM", title: "Gates open", detail: "Carnival midway, Bullfighters Only tailgate" },
+      { time: "7:00 PM", title: "PRCA Rodeo, Friday Night Performance", detail: "Presented by Pepper Equipment" },
+      { time: "9:30 PM", title: "Headliner Concert", detail: "[CONFIRM: 2027 artist], presented by Plant Nutrient Solutions Summit Gold" },
+    ],
+  },
+  {
+    label: "Saturday",
+    date: "July 10, 2027",
+    datetime: "2027-07-10",
+    description: "Local rodeo, PRCA, parade, and the biggest after party.",
+    events: [
+      { time: "10:00 AM", title: "Downtown Parade", detail: "Repeats Friday route" },
+      { time: "11:00 AM", title: "Local Rodeo", detail: "San Luis Valley residents, following PRCA slack" },
+      { time: "5:00 PM", title: "Gates open", detail: "Carnival midway, mutton busting weigh-in" },
+      { time: "7:00 PM", title: "PRCA Rodeo, Saturday Night Performance", detail: "Presented by Pepper Equipment" },
+      { time: "9:00 PM", title: "MV Coop Kubota After Party", detail: "Justin Kemp Band, dance floor open until 1 AM" },
+    ],
+  },
+  {
+    label: "Sunday Matinee",
+    date: "July 11, 2027",
+    datetime: "2027-07-11",
+    description: "Final day, afternoon performance, awards.",
+    events: [
+      { time: "11:00 AM", title: "Gates open", detail: "Carnival midway open last day" },
+      { time: "1:00 PM", title: "Sunday Matinee PRCA Rodeo", detail: "Presented by Pepper Equipment" },
+      { time: "5:00 PM", title: "Awards Ceremony", detail: "Stampede Grounds, overall champions announced" },
+    ],
+  },
+];
+
+const relatedEvents = [
+  { label: "Downtown Parade", href: "/parade", detail: "Friday and Saturday, 10 AM" },
+  { label: "Local Rodeo", href: "/contestants", detail: "Saturday 11 AM, SLV residents" },
+  { label: "Mutton Busting", href: "/mutton-busting", detail: "Every performance, 5 to 7 year olds" },
+  { label: "Wrights Amusements Carnival", href: "/carnival", detail: "All four days" },
+  { label: "Rotary Chuckwagon Dinner", href: "/events", detail: "Thursday, Rotary Park [CONFIRM]" },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Events and Schedule", description, url }),
+  buildEventSchema(),
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Events", url },
+  ]),
+];
+---
+<BaseLayout title="Events and Schedule" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow={organization.nextEvent.displayDate}
+    title="Four days. One schedule."
+    subtitle="Every PRCA performance, every parade, every after party, every carnival hour."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="space-y-12">
+      <SectionHeader number="01" label="The schedule" />
+      {nights.map((night) => (
+        <article class="border-t-2 border-oxblood pt-8 grid gap-8 md:grid-cols-12">
+          <header class="md:col-span-4">
+            <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">
+              {night.label}
+            </p>
+            <p class="mt-2 font-display font-black text-3xl md:text-4xl">
+              <time datetime={night.datetime}>{night.date}</time>
+            </p>
+            <p class="mt-4 font-sans text-sm text-charcoal/70 max-w-xs">
+              {night.description}
+            </p>
+          </header>
+          <ul class="md:col-span-8 space-y-6">
+            {night.events.map((event) => (
+              <li class="grid grid-cols-[auto_1fr] gap-6">
+                <p class="font-sans text-xs uppercase tracking-widest text-charcoal/60 tabular pt-1 w-20">
+                  {event.time}
+                </p>
+                <div>
+                  <p class="font-sans text-base font-medium text-charcoal">{event.title}</p>
+                  <p class="font-sans text-sm text-charcoal/70">{event.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+
+      <div class="flex flex-wrap gap-4 pt-6">
+        <BuyTicketsButton />
+        <Button href="/tickets" variant="ghost">Ticket options and pricing</Button>
+      </div>
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="Also happening" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        Beyond the arena.
+      </h2>
+      <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {relatedEvents.map((e) => (
+          <li>
+            <a href={e.href} class="block border-t-2 border-dust pt-5 hover:border-oxblood transition-colors">
+              <p class="font-display text-xl font-black text-charcoal">{e.label}</p>
+              <p class="mt-2 font-sans text-sm text-charcoal/70">{e.detail}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+  </main>
+</BaseLayout>
