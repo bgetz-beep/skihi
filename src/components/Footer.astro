@@ -1,0 +1,71 @@
+---
+import { organization } from "@config/organization";
+
+const nowYear = new Date().getFullYear();
+---
+<footer class="mt-24 border-t border-dust/40 bg-bone">
+  <div class="mx-auto max-w-7xl px-6 py-16">
+    <div class="grid gap-12 md:grid-cols-3">
+      <section>
+        <h2 class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Contact</h2>
+        <ul class="mt-4 space-y-2 font-sans text-sm text-charcoal">
+          <li>
+            <a href={`tel:${organization.contact.phone.replace(/[^0-9+]/g, "")}`} class="hover:text-oxblood">
+              {organization.contact.phoneDisplay}
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${organization.contact.email}`} class="hover:text-oxblood">
+              {organization.contact.email}
+            </a>
+          </li>
+          <li class="pt-2 text-charcoal/70">
+            {organization.mailingAddress.poBox}<br />
+            {organization.mailingAddress.city}, {organization.mailingAddress.region} {organization.mailingAddress.postalCode}
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Venue</h2>
+        <address class="mt-4 not-italic font-sans text-sm text-charcoal">
+          {organization.venue.name}<br />
+          {organization.venue.streetAddress}<br />
+          {organization.venue.city}, {organization.venue.region} {organization.venue.postalCode}
+        </address>
+
+        <h3 class="mt-6 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Ticket Office</h3>
+        <address class="mt-4 not-italic font-sans text-sm text-charcoal">
+          {organization.ticketOffice.streetAddress}<br />
+          {organization.ticketOffice.city}, {organization.ticketOffice.region} {organization.ticketOffice.postalCode}<br />
+          <span class="text-charcoal/70">{organization.ticketOffice.hours}</span>
+        </address>
+      </section>
+
+      <section>
+        <h2 class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Follow</h2>
+        <ul class="mt-4 space-y-2 font-sans text-sm text-charcoal">
+          <li>
+            <a href={organization.social.facebook} rel="noopener noreferrer" target="_blank" class="hover:text-oxblood">
+              Facebook
+            </a>
+          </li>
+          <li>
+            <a href={organization.social.instagram} rel="noopener noreferrer" target="_blank" class="hover:text-oxblood">
+              Instagram
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="mt-16 border-t border-dust/40 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <p class="font-sans text-xs text-charcoal/60">
+        {organization.name}. {organization.tagline}. Founded {organization.foundingYear}.
+      </p>
+      <p class="font-sans text-xs text-charcoal/60">
+        &copy; {nowYear} {organization.legalName}.
+      </p>
+    </div>
+  </div>
+</footer>
