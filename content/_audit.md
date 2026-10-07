@@ -78,3 +78,14 @@ Items blocking final `/events`, `/sponsors`, `/parade`, `/mutton-busting`, `/sch
 - **2026-10-07**: Current `/contact-us` and `/events` have newsletter capture forms. Our replica does not. User explicitly rejected newsletter capture on 2026-10-06.
 - **2026-10-07**: Historical sponsor names surfaced from `/event-pages-sitemap.xml`: Pepper Equipment (PRCA), Plant Nutrient Solutions Summit Gold (concert), MV Coop Kubota (after-party), Monte Vista Rotary (chuckwagon), Wrights Amusements (carnival). These are usable on `/sponsors` without `[CONFIRM]` tags.
 - **2026-10-07**: Committee page gives 14 named members with high-resolution headshots. "18 volunteers" text claim implies 4 additional members are unnamed or vacant. Flag.
+- **2026-10-07**: GitHub repo consolidated to the pre-existing `bgetz-beep/skihi` (not the mistakenly created `skihi-pitch-site`). Railway project `ski-hi` was already pointed at `bgetz-beep/skihi` with domain `skihi-production.up.railway.app`. Orphan `skihi-pitch-site` repo on GitHub needs manual deletion (requires `delete_repo` scope).
+
+## Plan 1 Complete
+
+**Date:** 2026-10-07
+**Railway URL:** https://skihi-production.up.railway.app
+**GitHub repo:** https://github.com/bgetz-beep/skihi
+**Branches on remote:** `main` (merged), `plan-1-foundation` (preserved for review)
+**Commits in Plan 1 (on main):** 13 since the design spec
+
+Ready for Plan 2 (Design System + Homepage Vertical Slice).
