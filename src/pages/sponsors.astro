@@ -1,0 +1,123 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import SponsorGrid from "@components/SponsorGrid.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildOrganizationSchema, buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Over one hundred businesses and families sponsor the Ski-Hi Stampede. Full roster of 2027 partners by tier and role.`;
+const url = `${site.baseUrl}/sponsors`;
+
+const tiers = [
+  {
+    label: "Named Partners",
+    description: "Multi-year sponsors featured across the event's signature moments.",
+    columns: 3 as const,
+    sponsors: [
+      { name: "Pepper Equipment", role: "PRCA Rodeo presenting sponsor" },
+      { name: "Plant Nutrient Solutions, Summit Gold", role: "Headliner concert sponsor" },
+      { name: "MV Coop Kubota", role: "After party sponsor" },
+      { name: "Monte Vista Rotary", role: "Chuckwagon dinner" },
+      { name: "Wrights Amusements", role: "Carnival operator" },
+      { name: "Justin Kemp Band", role: "Nightly dance" },
+    ],
+  },
+  {
+    label: "Platinum Sponsors",
+    description: "16 Platinum-tier partners supporting signature event elements.",
+    columns: 4 as const,
+    sponsors: Array.from({ length: 16 }, (_, i) => ({
+      name: `[CONFIRM] Platinum Sponsor ${i + 1}`,
+    })),
+  },
+  {
+    label: "Event Sponsors",
+    description: "One sponsor for each sanctioned PRCA event.",
+    columns: 3 as const,
+    sponsors: [
+      { name: "[CONFIRM]", role: "Bareback" },
+      { name: "[CONFIRM]", role: "Barrel Racing" },
+      { name: "[CONFIRM]", role: "Breakaway Roping" },
+      { name: "[CONFIRM]", role: "Bull Riding" },
+      { name: "[CONFIRM]", role: "Calf Roping" },
+      { name: "[CONFIRM]", role: "Mutton Busting" },
+      { name: "[CONFIRM]", role: "Tie Down" },
+      { name: "[CONFIRM]", role: "Steer Wrestling" },
+      { name: "[CONFIRM]", role: "Team Roping" },
+    ],
+  },
+  {
+    label: "Chute Sponsors",
+    description: "Seven chute-tier partners.",
+    columns: 4 as const,
+    sponsors: Array.from({ length: 7 }, (_, i) => ({
+      name: `[CONFIRM] Chute Sponsor ${i + 1}`,
+    })),
+  },
+  {
+    label: "Specialty Sponsors",
+    columns: 2 as const,
+    sponsors: [
+      { name: "[CONFIRM]", role: "Pick Up Man" },
+      { name: "[CONFIRM]", role: "Photography" },
+    ],
+  },
+];
+
+const orgSchema = buildOrganizationSchema();
+const sponsorNames = tiers.flatMap((t) => t.sponsors.map((s) => s.name)).filter((n) => !n.startsWith("[CONFIRM]"));
+(orgSchema as Record<string, unknown>).sponsor = sponsorNames.map((n) => ({
+  "@type": "Organization",
+  "name": n,
+}));
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Sponsors", description, url }),
+  orgSchema,
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Sponsors", url },
+  ]),
+];
+---
+<BaseLayout title="Sponsors" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Our partners"
+    title="The people who keep the Stampede running."
+    subtitle="Over one hundred businesses and families sponsor the Ski-Hi Stampede every July. The full 2027 roster, by tier."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section>
+      <SectionHeader number="01" label="2027 Sponsors" />
+      <div class="mt-10">
+        <SponsorGrid tiers={tiers} />
+      </div>
+    </section>
+
+    <section id="become-a-sponsor" class="border-2 border-oxblood p-8 md:p-12 bg-bone">
+      <SectionHeader number="02" label="Become a sponsor" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95] max-w-3xl">
+        Put your name on the oldest pro rodeo in Colorado.
+      </h2>
+      <p class="mt-6 font-sans text-base text-charcoal/80 max-w-prose">
+        Sponsorship tiers from Chute to Platinum are available for the 2027 Ski-Hi Stampede. Each tier includes signage, program placement, PA mentions, and tickets. Email the committee for the current sponsorship packet and pricing.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <Button href={`mailto:${organization.contact.email}?subject=2027 Ski-Hi Stampede Sponsorship`}>
+          Email the committee
+        </Button>
+        <Button href={`tel:${organization.contact.phone.replace(/[^0-9+]/g, "")}`} variant="ghost">
+          Call {organization.contact.phoneDisplay}
+        </Button>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
