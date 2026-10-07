@@ -7,12 +7,12 @@
 ## Pages
 
 - [x] `/` Homepage: see `content/raw/home.md`
-- [ ] `/our-sponsors` Sponsors: see `content/raw/sponsors.md`
-- [ ] `/events` Events: see `content/raw/events.md`
-- [ ] `/asu-scholorship-application` ASU Scholarship: see `content/raw/scholarship.md`
-- [ ] `/local-rodeo` Contestants: see `content/raw/contestants.md`
-- [ ] `/parade` Parade: see `content/raw/parade.md`
-- [ ] `/general-1` Mutton Busting: see `content/raw/mutton-busting.md`
+- [x] `/our-sponsors` Sponsors: see `content/raw/sponsors.md`
+- [x] `/events` Events: see `content/raw/events.md`
+- [x] `/asu-scholorship-application` ASU Scholarship: see `content/raw/scholarship.md`
+- [x] `/local-rodeo` Contestants: see `content/raw/contestants.md`
+- [x] `/parade` Parade: see `content/raw/parade.md`
+- [x] `/general-1` Mutton Busting: see `content/raw/mutton-busting.md`
 - [ ] `More ▾` dropdown contents: see `content/raw/_more-dropdown.md`
 
 ## Social Media
