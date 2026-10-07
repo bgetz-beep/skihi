@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-cream: #FBFAF5;
   --color-bone: #F2EBDC;
   --color-oxblood: #6B1F1A;
   --color-dust: #B59470;
@@ -16,7 +17,7 @@
 
 @layer base {
   html {
-    background-color: var(--color-bone);
+    background-color: var(--color-cream);
     color: var(--color-charcoal);
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
@@ -28,10 +29,22 @@
   }
 
   .bg-paper {
-    background-color: var(--color-bone);
-    background-image: url("/paper-grain.svg");
-    background-size: 200px 200px;
-    background-repeat: repeat;
-    background-attachment: fixed;
+    background-color: var(--color-cream);
   }
+
+  /* Alternating section backgrounds within <main>. Odd sections sit on
+     the cream body color; even sections get a bone wash that extends
+     full-bleed via the box-shadow / clip-path trick, so the alternation
+     reads edge-to-edge even though content stays inside max-w-7xl. */
+  main > section:nth-of-type(even) {
+    position: relative;
+    background-color: var(--color-bone);
+    box-shadow: 0 0 0 100vmax var(--color-bone);
+    clip-path: inset(0 -100vmax);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  /* First section after the hero gets a top rule, not negative margin.
+     Last section flows into the footer naturally. */
 }
