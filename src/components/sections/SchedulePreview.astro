@@ -1,0 +1,84 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+
+const nights = [
+  {
+    label: "Thursday",
+    date: "July 8, 2027",
+    datetime: "2027-07-08",
+    events: [
+      { time: "7:00 PM", title: "PRCA Rodeo", detail: "Presented by Pepper Equipment" },
+      { time: "9:00 PM", title: "Nightly Dance", detail: "Justin Kemp Band" },
+    ],
+  },
+  {
+    label: "Friday",
+    date: "July 9, 2027",
+    datetime: "2027-07-09",
+    events: [
+      { time: "10:00 AM", title: "Downtown Parade", detail: "Downtown Monte Vista" },
+      { time: "7:00 PM", title: "PRCA Rodeo", detail: "Presented by Pepper Equipment" },
+      { time: "9:00 PM", title: "Headliner Concert", detail: "[CONFIRM]" },
+    ],
+  },
+  {
+    label: "Saturday",
+    date: "July 10, 2027",
+    datetime: "2027-07-10",
+    events: [
+      { time: "10:00 AM", title: "Downtown Parade", detail: "Downtown Monte Vista" },
+      { time: "11:00 AM", title: "Local Rodeo", detail: "SLV residents, following PRCA slack" },
+      { time: "7:00 PM", title: "PRCA Rodeo", detail: "Presented by Pepper Equipment" },
+      { time: "9:00 PM", title: "After Party", detail: "MV Coop Kubota, with Justin Kemp Band" },
+    ],
+  },
+  {
+    label: "Sunday",
+    date: "July 11, 2027",
+    datetime: "2027-07-11",
+    events: [
+      { time: "1:00 PM", title: "Sunday Matinee PRCA Rodeo", detail: "Presented by Pepper Equipment" },
+      { time: "5:00 PM", title: "Awards and Closing", detail: "Stampede Grounds" },
+    ],
+  },
+];
+---
+<section id="schedule" class="max-w-7xl mx-auto px-6 pt-24">
+  <SectionHeader number="01" label="The schedule" />
+  <h2 class="mt-6 font-display font-black text-5xl md:text-7xl text-charcoal leading-none">
+    Four days.<br />One hundred eight years in the making.
+  </h2>
+  <p class="mt-6 font-sans text-base md:text-lg text-charcoal/80 max-w-prose">
+    The Ski-Hi Stampede runs Thursday through Sunday, July 8 to 11, 2027. PRCA sanctioned rodeo performances every evening, downtown parades Friday and Saturday morning, local rodeo for San Luis Valley residents Saturday, and nightly dancing at the Stampede Grounds.
+  </p>
+
+  <div class="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+    {nights.map((night) => (
+      <article class="border-t-2 border-oxblood pt-6">
+        <header>
+          <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">
+            {night.label}
+          </p>
+          <p class="mt-1 font-display text-2xl font-black">
+            <time datetime={night.datetime}>{night.date}</time>
+          </p>
+        </header>
+        <ul class="mt-6 space-y-5">
+          {night.events.map((event) => (
+            <li>
+              <p class="font-sans text-xs uppercase tracking-widest text-charcoal/60 tabular">{event.time}</p>
+              <p class="font-sans text-base font-medium text-charcoal">{event.title}</p>
+              <p class="font-sans text-sm text-charcoal/70">{event.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+
+  <div class="mt-16 flex flex-wrap gap-4">
+    <Button href="/events">Full schedule</Button>
+    <Button href="/tickets" variant="ghost">Ticket options</Button>
+  </div>
+</section>
