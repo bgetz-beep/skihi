@@ -1,0 +1,44 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+
+const historicalSponsors = [
+  { name: "Pepper Equipment", role: "PRCA Rodeo presenting sponsor" },
+  { name: "Plant Nutrient Solutions, Summit Gold", role: "Headliner concert sponsor" },
+  { name: "MV Coop Kubota", role: "After party sponsor" },
+  { name: "Monte Vista Rotary", role: "Chuckwagon dinner" },
+  { name: "Wrights Amusements", role: "Carnival operator" },
+];
+---
+<section class="max-w-7xl mx-auto px-6 pt-32">
+  <SectionHeader number="03" label="Our sponsors" />
+  <div class="mt-6 flex flex-wrap items-end justify-between gap-6">
+    <h2 class="font-display font-black text-5xl md:text-6xl text-charcoal leading-[0.95] max-w-3xl">
+      The people who keep the Stampede running.
+    </h2>
+    <p class="font-sans text-base text-charcoal/70 max-w-md">
+      Over one hundred businesses and families support the Ski-Hi Stampede every year. A sample of long-standing partners below. The full roster lives on the sponsors page.
+    </p>
+  </div>
+
+  <ul class="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+    {historicalSponsors.map((s, i) => (
+      <li class="border-t-2 border-dust pt-5">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood tabular">
+          {String(i + 1).padStart(2, "0")}
+        </p>
+        <p class="mt-2 font-display text-xl font-black text-charcoal leading-tight">
+          {s.name}
+        </p>
+        <p class="mt-2 font-sans text-sm text-charcoal/70">
+          {s.role}
+        </p>
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-16 flex flex-wrap gap-4">
+    <Button href="/sponsors">Full sponsor roster</Button>
+    <Button href="/sponsors#become-a-sponsor" variant="ghost">Become a sponsor</Button>
+  </div>
+</section>
