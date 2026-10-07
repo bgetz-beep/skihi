@@ -1,0 +1,112 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `The $3,500 Ski-Hi Stampede scholarship for San Luis Valley students attending Adams State University. Applications due [CONFIRM 2027 deadline].`;
+const url = `${site.baseUrl}/scholarship`;
+
+const criteria = [
+  { label: "Residency", detail: "San Luis Valley resident" },
+  { label: "Enrollment", detail: "Attending or planning to attend Adams State University" },
+  { label: "Status", detail: "Graduating high school senior or current college student" },
+  { label: "Values", detail: "Demonstrated academic achievement, community involvement, and SLV western heritage" },
+];
+
+const pastRecipients = [
+  { name: "[CONFIRM]", year: "2026" },
+  { name: "[CONFIRM]", year: "2025" },
+  { name: "[CONFIRM]", year: "2024" },
+  { name: "[CONFIRM]", year: "2023" },
+];
+
+const programSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOccupationalProgram",
+  "name": "Ski-Hi Stampede Scholarship at Adams State University",
+  "description": "$3,500 scholarship ($1,750 Fall and $1,750 Spring) for San Luis Valley residents attending Adams State University, awarded annually by the Ski-Hi Stampede.",
+  "provider": {
+    "@type": "Organization",
+    "name": organization.legalName,
+    "url": site.baseUrl,
+  },
+  "educationalLevel": "Undergraduate",
+  "occupationalCategory": "Any",
+};
+
+const jsonLd = [
+  buildWebPageSchema({ name: "ASU Scholarship", description, url }),
+  programSchema,
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Scholarship", url },
+  ]),
+];
+---
+<BaseLayout title="ASU Scholarship" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Adams State University"
+    title="$3,500 scholarship."
+    subtitle="For San Luis Valley students attending Adams State. One award, split evenly across Fall and Spring semesters."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-2 items-start">
+      <div>
+        <SectionHeader number="01" label="The scholarship" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Three thousand five hundred dollars toward a degree in the valley.
+        </h2>
+        <p class="mt-6 font-sans text-base text-charcoal/90 max-w-prose">
+          The Ski-Hi Stampede awards one scholarship each year to a San Luis Valley resident attending Adams State University in Alamosa. $1,750 is paid toward the Fall semester, $1,750 toward Spring.
+        </p>
+        <p class="mt-6 font-sans text-base text-charcoal/90 max-w-prose">
+          Applications are open to graduating high school seniors and current ASU students. Download the application below and return it by [CONFIRM: 2027 deadline].
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <Button href="/[CONFIRM]-2027-asu-scholarship.docx">Download application</Button>
+          <Button href={`mailto:${organization.contact.email}?subject=ASU Scholarship Question`} variant="ghost">
+            Email the committee
+          </Button>
+        </div>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-4">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Eligibility</p>
+        <ul class="space-y-3">
+          {criteria.map((c) => (
+            <li>
+              <p class="font-sans text-xs uppercase tracking-widest text-charcoal/60">{c.label}</p>
+              <p class="font-sans text-base text-charcoal">{c.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="Past recipients" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        Students who have carried the Stampede into their degree.
+      </h2>
+      <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {pastRecipients.map((r) => (
+          <li class="border-t-2 border-dust pt-5">
+            <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood tabular">{r.year}</p>
+            <p class="mt-2 font-display text-xl font-black text-charcoal">{r.name}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 font-sans text-sm text-charcoal/70 italic">
+        Full recipient list pending Ski-Hi committee confirmation.
+      </p>
+    </section>
+
+  </main>
+</BaseLayout>
