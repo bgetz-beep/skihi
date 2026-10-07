@@ -1,0 +1,116 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Wrights Amusements Carnival at the 2027 Ski-Hi Stampede. All four nights, July 8 to 11. Rides, games, food, and midway lights.`;
+const url = `${site.baseUrl}/carnival`;
+
+const hours = [
+  { day: "Thursday, July 8", open: "5:00 PM", close: "11:00 PM" },
+  { day: "Friday, July 9", open: "4:00 PM", close: "12:00 AM" },
+  { day: "Saturday, July 10", open: "12:00 PM", close: "12:00 AM" },
+  { day: "Sunday, July 11", open: "12:00 PM", close: "9:00 PM" },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Carnival", description, url }),
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Wrights Amusements Carnival at Ski-Hi Stampede",
+    "description": "Four-day carnival midway on the Ski-Hi Stampede grounds, operated by Wrights Amusements.",
+    "startDate": organization.nextEvent.startDate,
+    "endDate": organization.nextEvent.endDate,
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": organization.venue.name,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": organization.venue.streetAddress,
+        "addressLocality": organization.venue.city,
+        "addressRegion": organization.venue.region,
+        "addressCountry": organization.venue.country,
+      },
+    },
+  },
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Carnival", url },
+  ]),
+];
+---
+<BaseLayout title="Carnival" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Wrights Amusements"
+    title="The midway."
+    subtitle="Four days of rides, games, and funnel cakes on the east side of the Stampede grounds."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-2 items-start">
+      <div>
+        <SectionHeader number="01" label="Operator" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Wrights Amusements.
+        </h2>
+        <p class="mt-6 font-sans text-base text-charcoal/90 max-w-prose">
+          Wrights Amusements operates the Ski-Hi Stampede carnival midway every year. Family-run carnival outfit, trusted stock of rides and games, same crew most summers.
+        </p>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-3">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Pricing</p>
+        <p class="font-sans text-base text-charcoal">
+          [CONFIRM] 2027 wristband pricing and per-ride ticket pricing.
+        </p>
+        <p class="pt-2 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Location</p>
+        <p class="font-sans text-base text-charcoal">
+          East side of the Stampede grounds. Enter via Sherman Avenue.
+        </p>
+      </aside>
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="Hours" />
+      <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+        Open all four days.
+      </h2>
+      <table class="mt-10 w-full border-t-2 border-oxblood">
+        <thead>
+          <tr>
+            <th class="py-4 text-left font-sans text-xs uppercase tracking-widest text-oxblood">Day</th>
+            <th class="py-4 text-left font-sans text-xs uppercase tracking-widest text-oxblood">Open</th>
+            <th class="py-4 text-left font-sans text-xs uppercase tracking-widest text-oxblood">Close</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-dust/40">
+          {hours.map((h) => (
+            <tr>
+              <td class="py-4 font-sans text-base text-charcoal">{h.day}</td>
+              <td class="py-4 font-sans text-base text-charcoal tabular">{h.open}</td>
+              <td class="py-4 font-sans text-base text-charcoal tabular">{h.close}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="mt-4 font-sans text-xs uppercase tracking-widest text-oxblood">[CONFIRM] 2027 carnival hours</p>
+    </section>
+
+    <section>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/events">Full schedule</Button>
+        <Button href="/visit" variant="ghost">Plan your visit</Button>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
