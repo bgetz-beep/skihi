@@ -1,0 +1,117 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import ArchiveImage from "@components/ArchiveImage.astro";
+import Button from "@components/Button.astro";
+import { images } from "@/images/manifest";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildOrganizationSchema, buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Founded in 1919, the Ski-Hi Stampede is Colorado's oldest pro rodeo. One hundred and eight years of PRCA rodeo in Monte Vista, Colorado.`;
+const url = `${site.baseUrl}/about`;
+
+const milestones = [
+  { year: "1919", event: "First Ski-Hi Stampede held in Monte Vista." },
+  { year: "1948", event: "RCA (now PRCA) sanctioning begins." },
+  { year: "1969", event: "Ski-Hi Stampede celebrates 50 years. [CONFIRM]" },
+  { year: "1994", event: "First nomination for PRCA Small Rodeo of the Year. [CONFIRM]" },
+  { year: "2019", event: "Centennial Stampede. 100 years." },
+  { year: "2027", event: "108th consecutive Ski-Hi Stampede." },
+];
+
+const orgSchema = buildOrganizationSchema();
+(orgSchema as Record<string, unknown>).award = `${organization.prcaNominations} PRCA Small Rodeo of the Year nominations`;
+
+const jsonLd = [
+  buildWebPageSchema({ name: "About", description, url }),
+  orgSchema,
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "About", url },
+  ]),
+];
+---
+<BaseLayout title="About" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Est. 1919"
+    title="Colorado's oldest pro rodeo."
+    subtitle="One hundred and eight consecutive Julys of PRCA rodeo in Monte Vista. Run by two hundred volunteers. Watched by ten thousand fans a year."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-16 md:grid-cols-12">
+      <div class="md:col-span-7 space-y-5 font-sans text-lg text-charcoal/90 max-w-prose">
+        <SectionHeader number="01" label="Our story" />
+        <p class="pt-6">
+          The San Luis Valley Ski-Hi Stampede started in 1919 as a community rodeo for ranchers, cowboys, and families across the valley. One hundred and eight years later, it is still the same thing: a four-day gathering of Monte Vista and the surrounding counties, with a professional rodeo at the center.
+        </p>
+        <p>
+          Sanctioned by the Professional Rodeo Cowboys Association. Nominated four times for Small Rodeo of the Year. Non-profit. Run by {organization.volunteerCount}+ volunteers who build the chutes in June and tear them down in July.
+        </p>
+        <p>
+          The grounds have not moved. Still at {organization.venue.streetAddress}, {organization.venue.city}, Colorado. Still the same arena. Still the Rockies on the horizon west.
+        </p>
+      </div>
+      <aside class="md:col-span-5">
+        <ArchiveImage
+          src={images.programBronc}
+          alt="Historical bronc riding photograph from the Ski-Hi Stampede program."
+          caption="Program bronc, Ski-Hi Stampede archive"
+        />
+      </aside>
+    </section>
+
+    <section>
+      <SectionHeader number="02" label="By the decades" />
+      <ol class="mt-10 space-y-6">
+        {milestones.map((m) => (
+          <li class="grid grid-cols-[auto_1fr] gap-6 border-t-2 border-dust pt-5">
+            <p class="font-display font-black text-3xl md:text-5xl text-oxblood tabular w-24 md:w-32">
+              {m.year}
+            </p>
+            <p class="font-sans text-base md:text-lg text-charcoal pt-2 md:pt-3">
+              {m.event}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="grid gap-10 md:grid-cols-3">
+      <div class="md:col-span-1">
+        <SectionHeader number="03" label="By the numbers" />
+      </div>
+      <div class="md:col-span-2 grid gap-6 sm:grid-cols-2">
+        <div class="border-t-2 border-oxblood pt-4">
+          <p class="font-display font-black text-5xl md:text-7xl text-charcoal tabular leading-none">{2027 - organization.foundingYear}</p>
+          <p class="mt-2 font-sans text-sm uppercase tracking-widest text-oxblood">Years running</p>
+        </div>
+        <div class="border-t-2 border-oxblood pt-4">
+          <p class="font-display font-black text-5xl md:text-7xl text-charcoal tabular leading-none">{organization.prcaNominations}</p>
+          <p class="mt-2 font-sans text-sm uppercase tracking-widest text-oxblood">PRCA Small Rodeo of the Year nominations</p>
+        </div>
+        <div class="border-t-2 border-oxblood pt-4">
+          <p class="font-display font-black text-5xl md:text-7xl text-charcoal tabular leading-none">{organization.volunteerCount}+</p>
+          <p class="mt-2 font-sans text-sm uppercase tracking-widest text-oxblood">Volunteers</p>
+        </div>
+        <div class="border-t-2 border-oxblood pt-4">
+          <p class="font-display font-black text-5xl md:text-7xl text-charcoal tabular leading-none">{organization.annualAttendance.toLocaleString()}+</p>
+          <p class="mt-2 font-sans text-sm uppercase tracking-widest text-oxblood">Fans per year</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/committee">Meet the committee</Button>
+        <Button href="/sponsors" variant="ghost">Our sponsors</Button>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
