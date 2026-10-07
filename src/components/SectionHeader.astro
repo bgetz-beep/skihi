@@ -1,0 +1,13 @@
+---
+interface Props {
+  number: string;
+  label: string;
+  class?: string;
+}
+
+const { number, label, class: className = "" } = Astro.props;
+---
+<header class={`flex items-center gap-4 border-l-2 border-dust pl-4 ${className}`}>
+  <span class="font-sans text-sm font-medium tabular text-oxblood">{number}</span>
+  <span class="font-sans text-sm font-medium uppercase tracking-widest text-charcoal">{label}</span>
+</header>

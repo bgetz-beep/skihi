@@ -1,0 +1,25 @@
+---
+import Button from "@components/Button.astro";
+import { ticketing } from "@config/ticketing";
+
+interface Props {
+  class?: string;
+  variant?: "primary" | "ghost";
+  label?: string;
+}
+
+const { class: className = "", variant = "primary", label = "Buy Tickets" } = Astro.props;
+
+let href = "/tickets";
+let external = false;
+
+if (ticketing.mode === "link" && ticketing.buyTicketsUrl) {
+  href = ticketing.buyTicketsUrl;
+  external = /^https?:\/\//.test(href);
+} else if (ticketing.mode === "embed") {
+  href = "/tickets#embed";
+}
+---
+<Button href={href} variant={variant} external={external} class={className}>
+  {label}
+</Button>
