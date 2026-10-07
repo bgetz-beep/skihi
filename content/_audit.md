@@ -102,3 +102,18 @@ Design system in place: palette (bone/oxblood/dust/denim/charcoal/grit), Playfai
 Homepage vertical slice complete: hero with cody fire image + aggressive Playfair H1, countdown island ticking to July 8 2027, 4-night schedule grid naming real sub-events and historical sponsors (Pepper Equipment, Justin Kemp Band, MV Coop Kubota), Who We Are rewritten in Ski-Hi voice (108 Julys, PRCA sanctioned, 10K fans), 5 historical sponsors previewed, Plan Your Visit teaser with grounds address and by-the-numbers aside. Event + Organization + BreadcrumbList schema.org JSON-LD applied. OpenGraph + Twitter card tags via BaseLayout.
 
 Ready for Plan 3 (full page rollout + SeatMaxx integration pattern).
+
+## Plan 3 Complete
+
+**Date:** 2026-10-07
+**Live site:** https://skihi-production.up.railway.app
+**Pages shipped (17 total):** /, /tickets, /events, /sponsors, /about, /visit, /parade, /mutton-busting, /scholarship, /committee, /contestants, /carnival, /vendors, /faq, /contact, /404, /design
+**Lighthouse samples (post-fix):** / 96 perf / 100 a11y, /tickets 98/100, /committee 99/100. All best-practices 100. SEO docked by noindex (expected).
+
+Inner-page primitives in place: PageHero, FAQList (with FAQPage schema), CommitteeCard, SponsorGrid. SeatMaxx three-mode integration (`SeatMaxxEmbed` + `SeatMaxxPlaceholder`) deployed with `placeholder` default.
+
+Every page carries schema.org JSON-LD matching the spec table: WebPage, Event, Organization, BreadcrumbList, TouristAttraction, LodgingBusiness, EducationalOccupationalProgram, ContactPoint. FAQPage schema on 6 pages (/tickets, /visit, /parade, /mutton-busting, /contestants, /faq).
+
+One a11y fix landed inline: PageHero eyebrow was text-dust on oxblood (4.17 contrast, below AA). Bumped to text-bone/80. 100 a11y restored on all audited pages.
+
+Ready for Plan 4 (SEO + AEO hardening + QA + launch).
