@@ -45,6 +45,14 @@
     padding-bottom: 4rem;
   }
 
-  /* First section after the hero gets a top rule, not negative margin.
-     Last section flows into the footer naturally. */
+  /* In even (bone-backed) sections, swap oxblood accents to denim so
+     the palette alternates alongside the background. Affects borders,
+     text, backgrounds, and hover states consistently. Button primary
+     variant also flips to denim within these sections. */
+  main > section:nth-of-type(even) .text-oxblood { color: var(--color-denim); }
+  main > section:nth-of-type(even) .border-oxblood { border-color: var(--color-denim); }
+  main > section:nth-of-type(even) .bg-oxblood { background-color: var(--color-denim); }
+  main > section:nth-of-type(even) .hover\:text-oxblood:hover { color: var(--color-denim); }
+  main > section:nth-of-type(even) .hover\:border-oxblood:hover { border-color: var(--color-denim); }
+  main > section:nth-of-type(even) .hover\:bg-oxblood:hover { background-color: var(--color-denim); }
 }
