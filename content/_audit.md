@@ -13,7 +13,13 @@
 - [x] `/local-rodeo` Contestants: see `content/raw/contestants.md`
 - [x] `/parade` Parade: see `content/raw/parade.md`
 - [x] `/general-1` Mutton Busting: see `content/raw/mutton-busting.md`
-- [ ] `More ▾` dropdown contents: see `content/raw/_more-dropdown.md`
+- [x] `More ▾` dropdown contents: see `content/raw/_more-dropdown.md`
+- [x] `/faq` FAQ: see `content/raw/faq.md` (empty on current site)
+- [x] `/stampede-comittee` Committee: see `content/raw/committee.md` (14 members)
+- [x] `/carnival` Carnival: see `content/raw/carnival.md` (operator: Wrights Amusements)
+- [x] `/contact-us` Contact: see `content/raw/contact.md`
+- [x] `/general-info` Vendors (not general info): see `content/raw/vendors.md`
+- [ ] `/shop` Merch store: 10 products catalogued in `_more-dropdown.md`. Not rebuilt in Plan 1-4 scope.
 
 ## Social Media
 

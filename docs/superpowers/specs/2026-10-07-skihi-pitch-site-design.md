@@ -37,11 +37,15 @@ Full nav parity with the current site, plus two SEO/AEO-valuable additions (`/ab
 | `/about` | About / History | 100+ years of heritage, origin story, PRCA history, past champions, archive photo wall |
 | `/visit` | Plan Your Visit | Venue address, parking, gate info, lodging in Monte Vista and Alamosa, directions, FAQ |
 | `/contact` | Contact | Phone, email, PO Box, ticket office hours, social links, `mailto:` contact |
+| `/faq` | FAQ | 15 to 25 structured questions with FAQPage schema |
+| `/committee` | Committee | Stampede Committee grid (14+ volunteers, 4 officers + directors) |
+| `/carnival` | Carnival | Wrights Amusements carnival details, hours, rides, pricing |
+| `/vendors` | Vendors | Vendor application info, requirements, dates, downloadable form |
 | `/404` | Not Found | Western-themed error, nav back home |
 
 **Rationale:** The current site funnels everything through a thin `/` and buries key info behind nav. New IA puts the three conversion-critical surfaces (schedule, tickets, visit) one click from `/` with in-page previews. `/about` and `/visit` are new; they score high on both SEO (schema.org `TouristAttraction`, `Event`, `FAQPage`) and AEO (answers common LLM queries like "where is Ski-Hi Stampede held" and "where to stay for Ski-Hi Stampede").
 
-The "More ▾" dropdown contents on the current site have not been audited yet. Phase 1 (content audit) will catalogue these and we loop back to amend this IA if a page type was missed.
+*Amended 2026-10-07 after content audit:* Added `/faq`, `/committee`, `/carnival`, `/vendors` based on pages discovered via `/pages-sitemap.xml`. The current site hides these behind a JS-generated "More ▾" dropdown. All four add SEO or AEO value and are low-effort to build with the data captured. The current site's `/stampede-comittee` has a typo in the slug; our replica uses `/committee`. The current site's `/general-info` is actually a vendor applications page; our replica names it `/vendors` for clarity. The current site's `/shop` (10 merch products on a Wix store) is deferred: SeatMaxx is not a merch platform. If kept at launch, point `/shop` at a Shopify or existing Wix store rather than rebuild.
 
 ## 4. Visual System
 
