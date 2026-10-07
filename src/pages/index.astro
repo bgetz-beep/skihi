@@ -5,6 +5,7 @@ import Countdown from "@components/Countdown.astro";
 import SchedulePreview from "@components/sections/SchedulePreview.astro";
 import WhoWeAre from "@components/sections/WhoWeAre.astro";
 import SponsorPreview from "@components/sections/SponsorPreview.astro";
+import VisitTeaser from "@components/sections/VisitTeaser.astro";
 import { organization } from "@config/organization";
 
 const description = `${organization.tagline}. ${organization.nextEvent.displayDate}, ${organization.venue.city}, ${organization.venue.region}.`;
@@ -16,5 +17,6 @@ const description = `${organization.tagline}. ${organization.nextEvent.displayDa
     <SchedulePreview />
     <WhoWeAre />
     <SponsorPreview />
+    <VisitTeaser />
   </main>
 </BaseLayout>

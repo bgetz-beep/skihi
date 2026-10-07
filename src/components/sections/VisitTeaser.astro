@@ -1,0 +1,60 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+---
+<section class="max-w-7xl mx-auto px-6 pt-32 pb-24">
+  <SectionHeader number="04" label="Plan your visit" />
+  <div class="mt-6 grid gap-16 md:grid-cols-2 items-start">
+
+    <div>
+      <h2 class="font-display font-black text-5xl md:text-6xl text-charcoal leading-[0.95]">
+        Monte Vista sits at seven thousand feet.
+      </h2>
+      <div class="mt-8 space-y-4 font-sans text-lg text-charcoal/90 max-w-prose">
+        <p>
+          The Ski-Hi Stampede Complex is at {organization.venue.streetAddress}, {organization.venue.city}, Colorado, 81144. Two and a half hours from Albuquerque. Four hours from Denver. One hour from Alamosa.
+        </p>
+        <p>
+          Gates open two hours before the first event each day. Parking is free at the grounds. Food and drink at the concession, cash and card. No bag policy posted; expect a standard check at the gate.
+        </p>
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <Button href="/visit">Plan your visit</Button>
+        <Button href="/visit#lodging" variant="ghost">Where to stay</Button>
+      </div>
+    </div>
+
+    <aside class="border border-dust p-8 space-y-6 bg-bone">
+      <div>
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">The grounds</p>
+        <address class="mt-2 not-italic font-sans text-base text-charcoal">
+          {organization.venue.name}<br />
+          {organization.venue.streetAddress}<br />
+          {organization.venue.city}, {organization.venue.region} {organization.venue.postalCode}
+        </address>
+      </div>
+      <div>
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Ticket office</p>
+        <address class="mt-2 not-italic font-sans text-base text-charcoal">
+          {organization.ticketOffice.streetAddress}<br />
+          {organization.ticketOffice.city}, {organization.ticketOffice.region} {organization.ticketOffice.postalCode}
+        </address>
+        <p class="mt-2 font-sans text-sm text-charcoal/70">
+          {organization.ticketOffice.hours}
+        </p>
+      </div>
+      <div>
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">By the numbers</p>
+        <ul class="mt-2 space-y-1 font-sans text-base text-charcoal tabular">
+          <li>{organization.foundingYear}: founded</li>
+          <li>{organization.volunteerCount}+: volunteers</li>
+          <li>{organization.annualAttendance.toLocaleString()}+: fans each summer</li>
+          <li>{organization.prcaNominations}: PRCA Small Rodeo of the Year nominations</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</section>
