@@ -89,3 +89,16 @@ Items blocking final `/events`, `/sponsors`, `/parade`, `/mutton-busting`, `/sch
 **Commits in Plan 1 (on main):** 13 since the design spec
 
 Ready for Plan 2 (Design System + Homepage Vertical Slice).
+
+## Plan 2 Complete
+
+**Date:** 2026-10-07
+**Live homepage:** https://skihi-production.up.railway.app
+**Lighthouse (home):** Performance 99, Accessibility 100, Best Practices 100, SEO 66 (SEO dropped only because `noindex` is on; will reach 100 after robots gate flip in Plan 4)
+**Report:** `docs/lighthouse/2026-10-07-home.report.json`
+
+Design system in place: palette (bone/oxblood/dust/denim/charcoal/grit), Playfair Display + IBM Plex Sans fonts, paper grain texture, nav with mobile takeover, footer with NAP from config, button + section-header + image primitives, `/design` developer showcase.
+
+Homepage vertical slice complete: hero with cody fire image + aggressive Playfair H1, countdown island ticking to July 8 2027, 4-night schedule grid naming real sub-events and historical sponsors (Pepper Equipment, Justin Kemp Band, MV Coop Kubota), Who We Are rewritten in Ski-Hi voice (108 Julys, PRCA sanctioned, 10K fans), 5 historical sponsors previewed, Plan Your Visit teaser with grounds address and by-the-numbers aside. Event + Organization + BreadcrumbList schema.org JSON-LD applied. OpenGraph + Twitter card tags via BaseLayout.
+
+Ready for Plan 3 (full page rollout + SeatMaxx integration pattern).
