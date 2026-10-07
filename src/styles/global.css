@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@theme {
+  --color-bone: #F2EBDC;
+  --color-oxblood: #6B1F1A;
+  --color-dust: #B59470;
+  --color-denim: #2B3B55;
+  --color-charcoal: #1A1613;
+  --color-grit: #0F0C0A;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+
+  --tracking-widest: 0.25em;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bone);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  time, .tabular, .price {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bg-paper {
+    background-color: var(--color-bone);
+    background-image: url("/paper-grain.svg");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    background-attachment: fixed;
+  }
+}
