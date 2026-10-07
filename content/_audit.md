@@ -71,7 +71,7 @@ Items blocking final `/events`, `/sponsors`, `/parade`, `/mutton-busting`, `/sch
 - **2026-10-07**: `/shop` (10-product Wix merch store) deferred outside Plan 1-4 scope. SeatMaxx is not a merch platform. On launch, point `/shop` to a Shopify or kept Wix store rather than rebuild.
 - **2026-10-07**: Four pages added to IA post-audit: `/faq`, `/committee`, `/carnival`, `/vendors`. Spec section 3 amended in commit `576c3df`.
 - **2026-10-07**: Instagram and Facebook captures deferred as manual follow-up. Automated extraction yields effectively nothing from either platform. Current site imagery (59 files) is sufficient for Plan 2 and 3.
-- **2026-10-07**: Images downloaded at Wix original resolution (102 MB total, largest 8 MB). Optimization to WebP/AVIF happens in Plan 2 via Astro `<Image />`.
+- **2026-10-07**: Images downloaded at Wix original resolution (102 MB total, largest 8 MB), then resized in-place via `scripts/resize-images.mjs` to cap max dimension at 2000 px (final: 15 MB). This was needed because Windows schannel + GitHub HTTPS choked on a 102 MB push. Final AVIF/WebP optimization still happens in Plan 2 via Astro `<Image />`.
 - **2026-10-07**: Current site hero says "104 Years" (stale from 2023). Our replica uses "108 Years" for 2027 event (1919 to 2027).
 - **2026-10-07**: Current site "Ticket Office OPENING JUNE 22, 2026" is stale. Our replica uses a `[CONFIRM]` placeholder for 2027 opening date.
 - **2026-10-07**: Current `/events` page is empty and the current `/faq` page is empty. These are the two biggest pitch opportunities since we fill content Ski-Hi has not written.
