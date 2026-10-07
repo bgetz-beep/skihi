@@ -1,0 +1,115 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Contact the Ski-Hi Stampede. Phone, email, mailing address, ticket office hours.`;
+const url = `${site.baseUrl}/contact`;
+
+const roles = [
+  { label: "Tickets", detail: "Call the ticket office", action: `tel:${organization.contact.phone.replace(/[^0-9+]/g, "")}`, actionLabel: organization.contact.phoneDisplay },
+  { label: "General inquiries", detail: "Email the committee", action: `mailto:${organization.contact.email}`, actionLabel: organization.contact.email },
+  { label: "Sponsorship", detail: `Email with subject "Sponsorship"`, action: `mailto:${organization.contact.email}?subject=2027 Ski-Hi Stampede Sponsorship`, actionLabel: "Email the committee" },
+  { label: "Parade entry", detail: "Email the parade coordinator", action: "mailto:cyvanderpool@gmail.com", actionLabel: "cyvanderpool@gmail.com" },
+  { label: "Vendor applications", detail: `Email with subject "Vendor"`, action: `mailto:${organization.contact.email}?subject=Vendor Application`, actionLabel: "Email the committee" },
+  { label: "Scholarship", detail: `Email with subject "ASU Scholarship"`, action: `mailto:${organization.contact.email}?subject=ASU Scholarship Question`, actionLabel: "Email the committee" },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Contact", description, url }),
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": organization.contact.phone,
+    "email": organization.contact.email,
+    "availableLanguage": "en",
+    "hoursAvailable": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "17:00",
+    },
+  },
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Contact", url },
+  ]),
+];
+---
+<BaseLayout title="Contact" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="Monte Vista, Colorado"
+    title="Contact."
+    subtitle="Phone during ticket office hours. Email anytime."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-3">
+      <div>
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Phone</p>
+        <p class="mt-3 font-display text-3xl font-black">
+          <a href={`tel:${organization.contact.phone.replace(/[^0-9+]/g, "")}`} class="hover:text-oxblood">
+            {organization.contact.phoneDisplay}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Email</p>
+        <p class="mt-3 font-display text-3xl font-black break-words">
+          <a href={`mailto:${organization.contact.email}`} class="hover:text-oxblood">
+            {organization.contact.email}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Mail</p>
+        <address class="mt-3 not-italic font-display text-2xl font-black leading-tight">
+          {organization.mailingAddress.poBox}<br />
+          {organization.mailingAddress.city}, {organization.mailingAddress.region} {organization.mailingAddress.postalCode}
+        </address>
+      </div>
+    </section>
+
+    <section>
+      <SectionHeader number="01" label="Who to contact for what" />
+      <ul class="mt-10 grid gap-6 md:grid-cols-2">
+        {roles.map((r) => (
+          <li class="border-t-2 border-dust pt-5">
+            <p class="font-display text-xl font-black">{r.label}</p>
+            <p class="mt-2 font-sans text-sm text-charcoal/70">{r.detail}</p>
+            <a href={r.action} class="mt-3 inline-block font-sans text-sm text-oxblood hover:underline break-all">
+              {r.actionLabel}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="grid gap-12 md:grid-cols-2">
+      <aside class="border border-dust bg-bone p-8">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Event address</p>
+        <address class="mt-3 not-italic font-sans text-base text-charcoal">
+          {organization.venue.name}<br />
+          {organization.venue.streetAddress}<br />
+          {organization.venue.city}, {organization.venue.region} {organization.venue.postalCode}
+        </address>
+      </aside>
+      <aside class="border border-dust bg-bone p-8">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Ticket office</p>
+        <address class="mt-3 not-italic font-sans text-base text-charcoal">
+          {organization.ticketOffice.streetAddress}<br />
+          {organization.ticketOffice.city}, {organization.ticketOffice.region} {organization.ticketOffice.postalCode}<br />
+          <span class="text-charcoal/70">{organization.ticketOffice.hours}</span>
+        </address>
+      </aside>
+    </section>
+
+  </main>
+</BaseLayout>

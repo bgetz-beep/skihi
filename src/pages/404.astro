@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@components/Button.astro";
+---
+<BaseLayout title="Page not found" description="Page not found on the Ski-Hi Stampede site.">
+  <main class="min-h-[70vh] flex items-center justify-center px-6 py-20">
+    <div class="max-w-2xl text-center space-y-6">
+      <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Error 404</p>
+      <h1 class="font-display font-black text-6xl md:text-8xl text-charcoal leading-none">
+        That trail does not lead here.
+      </h1>
+      <p class="font-sans text-base text-charcoal/80">
+        The page you asked for is not on the Ski-Hi Stampede site. Head back to the main grounds or jump to the schedule.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center pt-4">
+        <Button href="/">Home</Button>
+        <Button href="/events" variant="ghost">Schedule</Button>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
