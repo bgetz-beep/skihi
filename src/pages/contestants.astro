@@ -1,0 +1,126 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import FAQList from "@components/FAQList.astro";
+import Button from "@components/Button.astro";
+import { organization } from "@config/organization";
+import { site } from "@config/site";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+
+const description = `Contestant information for the 2027 Ski-Hi Stampede. PRCA sanction, Local Rodeo for San Luis Valley residents, entry details.`;
+const url = `${site.baseUrl}/contestants`;
+
+const prcaEvents = [
+  "Bareback Riding",
+  "Barrel Racing",
+  "Breakaway Roping",
+  "Bull Riding",
+  "Calf Roping",
+  "Steer Wrestling",
+  "Team Roping",
+  "Tie Down Roping",
+];
+
+const faqItems = [
+  {
+    question: "What is PRCA slack?",
+    answer: "PRCA slack is the preliminary performance held before the ticketed night performances. Contestants who did not draw a time in the main performance compete during slack. For the 2027 Ski-Hi Stampede, slack runs the morning of Saturday, July 10, open to the public.",
+  },
+  {
+    question: "What is the Local Rodeo?",
+    answer: "A separate, non-PRCA rodeo for San Luis Valley residents, held Saturday, July 10 at 11:00 AM following PRCA slack. Open to amateur contestants from the valley. [CONFIRM] entry rules and payout.",
+  },
+  {
+    question: "How do PRCA pros enter the Ski-Hi Stampede?",
+    answer: "Enter through the PRCA central entry system at prorodeo.com. Entries open and close per the standard PRCA schedule. The Ski-Hi Stampede is listed in the Mountain States Circuit.",
+  },
+  {
+    question: "Are there entry fees?",
+    answer: "Standard PRCA entry fees apply for the sanctioned events. [CONFIRM] 2027 Local Rodeo entry fees.",
+  },
+  {
+    question: "What is the payout structure?",
+    answer: "[CONFIRM] 2027 added money per event. Payouts follow PRCA standard formulas for sanctioned events.",
+  },
+  {
+    question: "Who is the stock contractor?",
+    answer: "[CONFIRM] 2027 stock contractor.",
+  },
+];
+
+const jsonLd = [
+  buildWebPageSchema({ name: "Contestant Information", description, url }),
+  buildBreadcrumbSchema([
+    { name: "Home", url: site.baseUrl },
+    { name: "Contestants", url },
+  ]),
+];
+---
+<BaseLayout title="Contestant Information" description={description}>
+  <script type="application/ld+json" slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <PageHero
+    eyebrow="PRCA sanctioned, locally run"
+    title="Contestant information."
+    subtitle="PRCA pros, San Luis Valley amateurs, and everything in between. Entry details, slack schedule, and local rodeo."
+  />
+
+  <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+    <section class="grid gap-12 md:grid-cols-2 items-start">
+      <div>
+        <SectionHeader number="01" label="PRCA sanctioned events" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Eight events, four nights.
+        </h2>
+        <p class="mt-6 font-sans text-base text-charcoal/90 max-w-prose">
+          The Ski-Hi Stampede is a Professional Rodeo Cowboys Association sanctioned event in the Mountain States Circuit. Standings count toward the Circuit Finals and the National Finals Rodeo.
+        </p>
+      </div>
+      <ul class="grid grid-cols-2 gap-3">
+        {prcaEvents.map((e) => (
+          <li class="border-l-2 border-oxblood pl-3 font-sans text-base text-charcoal">{e}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="grid gap-12 md:grid-cols-2 items-start border-t-2 border-dust pt-16">
+      <div>
+        <SectionHeader number="02" label="Local Rodeo" />
+        <h2 class="mt-6 font-display font-black text-4xl md:text-5xl text-charcoal leading-[0.95]">
+          Saturday, 11 AM. Valley only.
+        </h2>
+        <p class="mt-6 font-sans text-base text-charcoal/90 max-w-prose">
+          The Local Rodeo is a non-PRCA event open to amateur contestants from the San Luis Valley. Held Saturday, July 10, 2027 at 11:00 AM, following PRCA slack. Same arena, same stock contractors, same crowd.
+        </p>
+        <div class="mt-8">
+          <Button href={`mailto:${organization.contact.email}?subject=Local Rodeo Entry`} variant="ghost">
+            Email for Local Rodeo entry
+          </Button>
+        </div>
+      </div>
+      <aside class="border border-dust bg-bone p-8 space-y-3">
+        <p class="font-sans text-xs font-medium uppercase tracking-widest text-oxblood">When</p>
+        <p class="font-sans text-base text-charcoal">
+          <time datetime="2027-07-10T11:00">Saturday, July 10, 11:00 AM</time>
+        </p>
+        <p class="pt-2 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Where</p>
+        <p class="font-sans text-base text-charcoal">
+          {organization.venue.name}<br />
+          {organization.venue.streetAddress}, {organization.venue.city}
+        </p>
+        <p class="pt-2 font-sans text-xs font-medium uppercase tracking-widest text-oxblood">Who</p>
+        <p class="font-sans text-base text-charcoal">
+          San Luis Valley residents, amateur contestants
+        </p>
+      </aside>
+    </section>
+
+    <section>
+      <SectionHeader number="03" label="FAQ" />
+      <FAQList items={faqItems} class="mt-10" />
+    </section>
+
+  </main>
+</BaseLayout>
