@@ -1,0 +1,28 @@
+---
+import HeroImage from "@components/HeroImage.astro";
+import BuyTicketsButton from "@components/BuyTicketsButton.astro";
+import { images } from "@/images/manifest";
+import { organization } from "@config/organization";
+---
+<HeroImage src={images.heroHomepage} alt="Bronc rider mid-ride at the Ski-Hi Stampede.">
+  <div class="h-full flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24 max-w-7xl mx-auto">
+    <p class="font-sans text-xs md:text-sm font-medium uppercase tracking-widest text-dust">
+      Monte Vista, Colorado. Est. {organization.foundingYear}.
+    </p>
+    <h1
+      class="mt-4 font-display font-black text-bone leading-[0.9]"
+      style="font-size: clamp(3rem, 8vw, 6.5rem);"
+    >
+      Colorado's Oldest<br />Pro Rodeo.
+    </h1>
+    <p class="mt-6 font-sans text-lg md:text-2xl text-bone/90 tabular">
+      {organization.nextEvent.displayDate}
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <BuyTicketsButton variant="primary" label="Buy Tickets" />
+      <a href="#schedule" class="inline-flex items-center font-sans text-xs font-medium uppercase tracking-widest text-bone hover:text-dust">
+        See the schedule
+      </a>
+    </div>
+  </div>
+</HeroImage>

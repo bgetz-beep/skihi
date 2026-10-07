@@ -1,15 +1,12 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import HeroHome from "@components/sections/HeroHome.astro";
 import { organization } from "@config/organization";
 
 const description = `${organization.tagline}. ${organization.nextEvent.displayDate}, ${organization.venue.city}, ${organization.venue.region}.`;
 ---
 <BaseLayout title="Home" description={description}>
-  <main class="min-h-screen flex items-center justify-center">
-    <div class="text-center">
-      <h1 class="text-4xl font-bold">{organization.name}</h1>
-      <p class="mt-4 text-xl">{organization.tagline}</p>
-      <p class="mt-2 text-stone-600">{organization.nextEvent.displayDate}</p>
-    </div>
+  <main>
+    <HeroHome />
   </main>
 </BaseLayout>
